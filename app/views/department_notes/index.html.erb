@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Department Notes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Department</th>
+      <th>Note</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @department_notes.each do |department_note| %>
+      <tr>
+        <td><%= department_note.department %></td>
+        <td><%= department_note.note %></td>
+        <td><%= link_to 'Show', department_note %></td>
+        <td><%= link_to 'Edit', edit_department_note_path(department_note) %></td>
+        <td><%= link_to 'Destroy', department_note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Department Note', new_department_note_path %>

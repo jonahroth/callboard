@@ -1,0 +1,1 @@
+json.array! @rehearsal_scenes, partial: 'rehearsal_scenes/rehearsal_scene', as: :rehearsal_scene

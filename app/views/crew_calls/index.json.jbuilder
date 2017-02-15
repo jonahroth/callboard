@@ -1,0 +1,1 @@
+json.array! @crew_calls, partial: 'crew_calls/crew_call', as: :crew_call
