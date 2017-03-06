@@ -1,0 +1,2 @@
+json.extract! rehearsal_scene, :id, :rehearsal_id, :scene_id, :expected_start, :expected_end, :actual_start, :actual_end, :created_at, :updated_at
+json.url rehearsal_scene_url(rehearsal_scene, format: :json)

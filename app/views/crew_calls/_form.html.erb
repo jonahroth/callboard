@@ -1,0 +1,27 @@
+<%= form_for(crew_call) do |f| %>
+  <% if crew_call.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(crew_call.errors.count, "error") %> prohibited this crew_call from being saved:</h2>
+
+      <ul>
+      <% crew_call.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :crew_role_id %>
+    <%= f.text_field :crew_role_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :rehearsal_id %>
+    <%= f.text_field :rehearsal_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

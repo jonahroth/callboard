@@ -1,0 +1,1 @@
+json.partial! "crew_roles/crew_role", crew_role: @crew_role

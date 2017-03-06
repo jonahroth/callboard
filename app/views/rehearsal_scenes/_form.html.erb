@@ -1,0 +1,47 @@
+<%= form_for(rehearsal_scene) do |f| %>
+  <% if rehearsal_scene.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rehearsal_scene.errors.count, "error") %> prohibited this rehearsal_scene from being saved:</h2>
+
+      <ul>
+      <% rehearsal_scene.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :rehearsal_id %>
+    <%= f.text_field :rehearsal_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :scene_id %>
+    <%= f.text_field :scene_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :expected_start %>
+    <%= f.datetime_select :expected_start %>
+  </div>
+
+  <div class="field">
+    <%= f.label :expected_end %>
+    <%= f.text_field :expected_end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :actual_start %>
+    <%= f.datetime_select :actual_start %>
+  </div>
+
+  <div class="field">
+    <%= f.label :actual_end %>
+    <%= f.datetime_select :actual_end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
