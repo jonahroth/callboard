@@ -12,4 +12,8 @@ RSpec.configure do |config|
   config.before(:suite) do
     Rails.application.load_seed
   end
+
+  config.after(:suite) do
+    ApplicationRecord.subclasses.each(&:delete_all)
+  end
 end
