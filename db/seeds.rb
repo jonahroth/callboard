@@ -9,7 +9,9 @@
 production = Production.create!(
   title: 'Macbeth',
   first_rehearsal: 1.day.from_now,
-  last_rehearsal: 30.days.from_now)
+  last_rehearsal: 30.days.from_now,
+  ios_code: '1234',
+  ios_expiration: 7.days.from_now)
 
 person_one = production.people.create!(
   first: 'Stephen',

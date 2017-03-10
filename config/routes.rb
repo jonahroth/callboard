@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get  'api/mobile/code'    => 'mobile#code'
+  post 'api/mobile/cell'    => 'mobile#cell'
+  get  'api/mobile/refresh' => 'mobile#refresh'
+
   resources :check_ins
   resources :crew_calls
   resources :department_notes
