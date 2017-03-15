@@ -13,4 +13,9 @@ class Person < ApplicationRecord
   def is_crew?
     crew_roles.any?
   end
+
+  def link_to_uuid(uuid)
+    self.ios_uuid = uuid
+    self.save!
+  end
 end

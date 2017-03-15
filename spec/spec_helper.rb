@@ -9,11 +9,11 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  config.before(:suite) do
-    Rails.application.load_seed
-  end
+  # config.before(:suite) do
+  #   Rails.application.load_seed
+  # end
 
-  config.after(:suite) do
-    ApplicationRecord.subclasses.each(&:delete_all)
-  end
+  # config.after(:suite) do
+  #   ApplicationRecord.subclasses.each(&:delete_all)
+  # end
 end
