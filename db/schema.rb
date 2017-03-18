@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301181403) do
+ActiveRecord::Schema.define(version: 20170315010459) do
 
   create_table "character_scenes", force: :cascade do |t|
     t.integer  "character_id"
@@ -97,6 +97,9 @@ ActiveRecord::Schema.define(version: 20170301181403) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "production_id"
+    t.string   "ios_uuid"
+    t.string   "cell"
+    t.string   "email"
     t.index ["production_id"], name: "index_people_on_production_id"
   end
 
@@ -106,6 +109,8 @@ ActiveRecord::Schema.define(version: 20170301181403) do
     t.date     "last_rehearsal"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "ios_code"
+    t.datetime "ios_expiration"
   end
 
   create_table "rehearsal_scenes", force: :cascade do |t|
