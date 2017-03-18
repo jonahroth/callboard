@@ -22,11 +22,12 @@ class MobileController < ApplicationController
   end
 
   def refresh
-  end
-
-  private
-
-  def valid_cell_params
-    params['production_id'] && params['uuid'] && params['cell']
+    production = Production.find_by(id: params['production_id'].to_i)
+    person = Person.find_by(ios_uuid: params['uuid'])
+    if production && person && person.production == production
+      render json: production
+    else
+      head :not_found
+    end
   end
 end

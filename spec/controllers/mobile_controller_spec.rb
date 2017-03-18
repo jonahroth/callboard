@@ -33,17 +33,49 @@ RSpec.describe MobileController, type: :controller do
   end
 
   describe "GET #cell" do
-    it "returns http success" do
-      get :cell, params: { production_id: production.id, cell: person.cell,
-                           uuid: 'aaa-bbb-ccc' }
-      expect(response).to have_http_status(:success)
+    describe 'with correct params' do
+      it "returns http success" do
+        get :cell, params: { production_id: production.id, cell: person.cell,
+                             uuid: 'aaa-bbb-ccc' }
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    describe 'with invalid params' do
+      it 'returns http bad request' do
+        get :cell, params: { production_id: '-1', cell: '2', uuid: '' }
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    describe 'with no params' do
+      it 'returns http bad request' do
+        get :cell
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 
   describe "GET #refresh" do
-    it "returns http success" do
-      get :refresh
-      expect(response).to have_http_status(:success)
+    before(:each) do
+      person.ios_uuid = 'aaa-bbb-ccc'
+      person.save!
+    end
+
+    describe 'with correct params' do
+      it 'returns http success' do
+        get :refresh, params: { production_id: production.id,
+                                uuid: person.ios_uuid }
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    describe 'with incorrect params' do
+      it 'returns http not found' do
+        get :refresh, params: { production_id: production.id + 1,
+                                uuid: person.ios_uuid }
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
 
