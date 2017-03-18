@@ -1,4 +1,5 @@
 class MobileController < ApplicationController
+  before_action { respond_to :json }
   def code
     production = Production.find_by(ios_code: params['ios_code'])
     if production

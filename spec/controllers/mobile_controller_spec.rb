@@ -13,21 +13,21 @@ RSpec.describe MobileController, type: :controller do
 
   describe "GET #code with correct params" do
     it "returns http success" do
-      get :code, params: { 'ios_code' => production.ios_code }
+      get :code, params: { 'ios_code' => production.ios_code }, format: :json
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET #code with incorrect params" do
     it "returns http not found" do
-      get :code, params: { 'ios_code' => production.ios_code.next }
+      get :code, params: { 'ios_code' => production.ios_code.next }, format: :json
       expect(response).to have_http_status(:not_found)
     end
   end
 
   describe "GET #code with no params" do
     it "returns http not found" do
-      get :code
+      get :code, format: :json
       expect(response).to have_http_status(:not_found)
     end
   end
@@ -36,21 +36,21 @@ RSpec.describe MobileController, type: :controller do
     describe 'with correct params' do
       it "returns http success" do
         get :cell, params: { production_id: production.id, cell: person.cell,
-                             uuid: 'aaa-bbb-ccc' }
+                             uuid: 'aaa-bbb-ccc' }, format: :json
         expect(response).to have_http_status(:success)
       end
     end
 
     describe 'with invalid params' do
       it 'returns http bad request' do
-        get :cell, params: { production_id: '-1', cell: '2', uuid: '' }
+        get :cell, params: { production_id: '-1', cell: '2', uuid: '' }, format: :json
         expect(response).to have_http_status(:bad_request)
       end
     end
 
     describe 'with no params' do
       it 'returns http bad request' do
-        get :cell
+        get :cell, format: :json
         expect(response).to have_http_status(:bad_request)
       end
     end
@@ -65,7 +65,7 @@ RSpec.describe MobileController, type: :controller do
     describe 'with correct params' do
       it 'returns http success' do
         get :refresh, params: { production_id: production.id,
-                                uuid: person.ios_uuid }
+                                uuid: person.ios_uuid }, format: :json
         expect(response).to have_http_status(:success)
       end
     end
@@ -73,10 +73,9 @@ RSpec.describe MobileController, type: :controller do
     describe 'with incorrect params' do
       it 'returns http not found' do
         get :refresh, params: { production_id: production.id + 1,
-                                uuid: person.ios_uuid }
+                                uuid: person.ios_uuid }, format: :json
         expect(response).to have_http_status(:not_found)
       end
     end
   end
-
 end
