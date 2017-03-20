@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Production.create!(title: 'Macbeth',
+                   first_rehearsal: 7.days.ago,
+                   last_rehearsal: 7.days.from_now)
+
+Production.create!(title: 'Elektra',
+                   first_rehearsal: 21.days.ago,
+                   last_rehearsal: 7.days.ago)
+
+Production.create!(title: 'Baby with the Bathwater',
+                   first_rehearsal: 42.days.ago,
+                   last_rehearsal: 21.days.ago)
