@@ -10,3 +10,14 @@
 #= require_tree ./controllers/main
 #= require_tree ./directives/global
 #= require_tree ./directives/main
+
+Prospero = angular.module("prospero", ["ngRoute"])
+
+Prospero.config(['$routeProvider', ($routeProvider) ->
+  $routeProvider.when('/post', {templateUrl: 'assets/mainPost.html', controller: 'IndexCtrl'})
+  $routeProvider.otherwise({templateUrl: 'assets/mainPost.html', controller: 'IndexCtrl'})
+])
+
+Prospero.controller 'IndexCtrl', ($scope) ->
+  $scope.title = "My Prospero!"
+  $scope.contents = "Sweet dreams are made of this"
