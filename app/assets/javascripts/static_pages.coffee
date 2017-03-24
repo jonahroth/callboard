@@ -14,10 +14,17 @@
 Prospero = angular.module("prospero", ["ngRoute"])
 
 Prospero.config(['$routeProvider', ($routeProvider) ->
-  $routeProvider.when('/post', {templateUrl: 'assets/mainPost.html', controller: 'IndexCtrl'})
-  $routeProvider.otherwise({templateUrl: 'assets/mainPost.html', controller: 'IndexCtrl'})
+  $routeProvider.when('/dif', {templateUrl: 'assets/templates/different.html', controller: 'DifCtrl'})
+  $routeProvider.otherwise({templateUrl: 'assets/templates/mainPost.html', controller: 'IndexCtrl'})
+])
+
+Prospero.config(['$locationProvider', ($locationProvider) ->
+  $locationProvider.hashPrefix('');
 ])
 
 Prospero.controller 'IndexCtrl', ($scope) ->
   $scope.title = "My Prospero!"
   $scope.contents = "Sweet dreams are made of this"
+
+Prospero.controller 'DifCtrl', ($scope) ->
+  $scope.title = "Different controller..."
