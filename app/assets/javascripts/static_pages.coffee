@@ -64,7 +64,9 @@ Prospero.controller 'IndexCtrl', ($scope, $http) ->
   $http({method: 'GET', url: '/people.json'})
     .then(people_load_success_fn, people_load_failure_fn)
 
-  works_load_success_fn = (response) -> $scope.works = (response.data)
+  works_load_success_fn = (response) ->
+    $scope.works = (response.data)
+    console.log $scope.works
   works_load_failure_fn = (response) -> console.log(response.status)
   $http({method: 'GET', url: '/works.json'})
     .then(works_load_success_fn, works_load_failure_fn)

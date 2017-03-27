@@ -25,6 +25,11 @@
                 {{ w.name }} {{ w.type }}
                 <br>
                 {{ w.duration }} minutes
+                <ul>
+                    <li ng-repeat="c in w.called">
+                        {{ c.first }} {{ c.last }}
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="work">
