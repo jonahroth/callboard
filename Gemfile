@@ -39,11 +39,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'angular-rails-templates'
-<<<<<<< HEAD
 
 gem 'shoulda-matchers'
-=======
->>>>>>> Back to working state
 
 group :development, :test do
   gem 'rspec-rails'
