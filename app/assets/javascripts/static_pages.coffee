@@ -11,11 +11,11 @@
 #= require_tree ./directives/global
 #= require_tree ./directives/main
 
-Prospero = angular.module("prospero", ["ngRoute"])
+Prospero = angular.module("prospero", ["ngRoute", "templates"])
 
 Prospero.config(['$routeProvider', ($routeProvider) ->
-  $routeProvider.when('/dif', {templateUrl: 'assets/templates/different.html', controller: 'DifCtrl'})
-  $routeProvider.otherwise({templateUrl: 'assets/templates/mainPost.html', controller: 'IndexCtrl'})
+  $routeProvider.when('/dif', {templateUrl: 'different.html', controller: 'DifCtrl'})
+  $routeProvider.otherwise({templateUrl: 'mainPost.html', controller: 'IndexCtrl'})
 ])
 
 Prospero.config(['$locationProvider', ($locationProvider) ->

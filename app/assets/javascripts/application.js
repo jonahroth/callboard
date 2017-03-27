@@ -15,4 +15,6 @@
 //= require bootstrap
 //= require angular
 //= require angular-route
+//= require angular-rails-templates
 //= require static_pages
+//= require_tree ./templates
