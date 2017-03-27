@@ -19,4 +19,25 @@
             </form>
         </div>
     </div>
+    <div class="col-md-6" id="works">
+        <div ng-repeat="w in works">
+            <div class="work">
+                {{ w.name }} {{ w.type }}
+            </div>
+        </div>
+        <div class="work">
+            <form name="workForm" ng-submit="works_submit()">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control" ng-model="works_message.work.name">
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <input type="text" name="work_type" class="form-control" ng-model="works_message.work.work_type">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
 </div>

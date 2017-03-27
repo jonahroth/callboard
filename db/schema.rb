@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 20170327135036) do
 
   create_table "works", force: :cascade do |t|
     t.string   "name"
-    t.string   "type"
+    t.string   "work_type"
     t.integer  "duration"
     t.integer  "break_duration"
     t.datetime "created_at",     null: false

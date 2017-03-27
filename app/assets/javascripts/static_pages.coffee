@@ -38,11 +38,32 @@ Prospero.controller 'IndexCtrl', ($scope, $http) ->
       format: 'application/json'
     }).then($scope.people_success, $scope.people_failure)
 
+  $scope.works_message = { work: {} }
+  $scope.works_success = (response) ->
+    $scope.works.push(response.data)
+    $scope.works_message = { work: {} }
+  $scope.works_failure = (response) ->
+    $scope.works.push({ name: 'fail' })
+  $scope.works_submit = () ->
+    console.log($scope.works_message)
+    $http({
+      method: 'POST',
+      url: '/works.json',
+      data: $scope.works_message,
+      format: 'application/json'
+    }).then($scope.works_success, $scope.works_failure)
 
-  success_fn = (response) -> $scope.people = (response.data)
-  failure_fn = (response) -> console.log(response.status)
+
+  people_load_success_fn = (response) -> $scope.people = (response.data)
+  people_load_failure_fn = (response) -> console.log(response.status)
   $http({method: 'GET', url: '/people.json'})
-    .then(success_fn, failure_fn)
+    .then(people_load_success_fn, people_load_failure_fn)
+
+  works_load_success_fn = (response) -> $scope.works = (response.data)
+  works_load_failure_fn = (response) -> console.log(response.status)
+  $http({method: 'GET', url: '/works.json'})
+    .then(works_load_success_fn, works_load_failure_fn)
+
 
 Prospero.controller 'DifCtrl', ($scope) ->
   $scope.title = "Different controller..."
