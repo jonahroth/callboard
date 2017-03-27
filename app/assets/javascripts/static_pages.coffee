@@ -22,9 +22,27 @@ Prospero.config(['$locationProvider', ($locationProvider) ->
   $locationProvider.hashPrefix('');
 ])
 
-Prospero.controller 'IndexCtrl', ($scope) ->
-  $scope.title = "My Prospero!"
-  $scope.contents = "Sweet dreams are made of this"
+Prospero.controller 'IndexCtrl', ($scope, $http) ->
+  $scope.people_message = { person: {} }
+  $scope.people_success = (response) ->
+    $scope.people.push(response.data)
+    $scope.people_message = { person: {} }
+  $scope.people_failure = (response) ->
+    $scope.people.push({ first: 'fail' })
+  $scope.people_submit = () ->
+    console.log($scope.people_message)
+    $http({
+      method: 'POST',
+      url: '/people.json',
+      data: $scope.people_message,
+      format: 'application/json'
+    }).then($scope.people_success, $scope.people_failure)
+
+
+  success_fn = (response) -> $scope.people = (response.data)
+  failure_fn = (response) -> console.log(response.status)
+  $http({method: 'GET', url: '/people.json'})
+    .then(success_fn, failure_fn)
 
 Prospero.controller 'DifCtrl', ($scope) ->
   $scope.title = "Different controller..."

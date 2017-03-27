@@ -1,4 +1,22 @@
-<div ng-controller="IndexCtrl">
-    <h1> {{ title }}</h1>
-    <p> {{ contents }} <p>
+<div ng-controller="IndexCtrl" class="row">
+    <div class="col-md-6" id="actors">
+        <div ng-repeat="p in people">
+            <div class="actor">
+            {{ p.first }} {{ p.last }}
+            </div>
+        </div>
+        <div class="actor">
+            <form name="personForm" ng-submit="people_submit()">
+                <div class="form-group">
+                    <label>First</label>
+                    <input type="text" name="first" class="form-control" ng-model="people_message.person.first">
+                </div>
+                <div class="form-group">
+                    <label>Last</label>
+                    <input type="text" name="last" class="form-control" ng-model="people_message.person.last">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
