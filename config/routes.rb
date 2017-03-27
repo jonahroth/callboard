@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :person_works
+  resources :works
   get 'static_pages/index'
   root 'static_pages#index'
 

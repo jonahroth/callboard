@@ -5,6 +5,8 @@ class Person < ApplicationRecord
   has_many :characters
   has_many :crew_roles
   has_many :conflicts
+  has_many :person_works
+  has_many :works, through: :person_works
 
   def is_cast?
     characters.any?
