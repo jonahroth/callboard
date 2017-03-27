@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require angular
+//= require autocomplete
 //= require angular-route
 //= require angular-rails-templates
 //= require static_pages

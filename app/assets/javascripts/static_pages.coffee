@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 #= require_self
+#= require autocomplete
 #= require_tree ./services/global
 #= require_tree ./services/main
 #= require_tree ./filters/global
@@ -11,7 +12,7 @@
 #= require_tree ./directives/global
 #= require_tree ./directives/main
 
-Prospero = angular.module("prospero", ["ngRoute", "templates"])
+Prospero = angular.module("prospero", ["ngRoute", "templates", "autocomplete"])
 
 Prospero.config(['$routeProvider', ($routeProvider) ->
   $routeProvider.when('/dif', {templateUrl: 'different.html', controller: 'DifCtrl'})
@@ -54,8 +55,12 @@ Prospero.controller 'IndexCtrl', ($scope, $http) ->
     }).then($scope.works_success, $scope.works_failure)
 
 
-  people_load_success_fn = (response) -> $scope.people = (response.data)
+  people_load_success_fn = (response) ->
+    $scope.people = (response.data)
+    $scope.people_names = $scope.people.map (obj) ->
+      obj.first + " " + obj.last
   people_load_failure_fn = (response) -> console.log(response.status)
+
   $http({method: 'GET', url: '/people.json'})
     .then(people_load_success_fn, people_load_failure_fn)
 
