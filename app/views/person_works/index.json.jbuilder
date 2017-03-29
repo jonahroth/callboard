@@ -1,0 +1,1 @@
+json.array! @person_works, partial: 'person_works/person_work', as: :person_work
