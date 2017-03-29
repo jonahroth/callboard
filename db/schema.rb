@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327135036) do
+ActiveRecord::Schema.define(version: 20170329140719) do
 
   create_table "character_scenes", force: :cascade do |t|
     t.integer  "character_id"
@@ -180,6 +180,8 @@ ActiveRecord::Schema.define(version: 20170327135036) do
     t.integer  "break_duration"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "rehearsal_id"
+    t.index ["rehearsal_id"], name: "index_works_on_rehearsal_id"
   end
 
 end

@@ -11,3 +11,5 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 Rails.application.config.assets.precompile += %w( static_pages.js )
+
+Rails.application.config.autoload_paths += %W(#{Rails.application.config.root}/lib)

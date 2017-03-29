@@ -1,1 +1,1 @@
-json.array! @rehearsals, partial: 'rehearsals/rehearsal', as: :rehearsal
+json.array! @rehearsals || rehearsals, partial: 'rehearsals/rehearsal', as: :rehearsal

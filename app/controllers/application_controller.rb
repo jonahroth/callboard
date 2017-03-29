@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  require 'scheduler/scheduler'
   protect_from_forgery with: :exception
 
   after_filter :set_csrf_cookie_for_ng

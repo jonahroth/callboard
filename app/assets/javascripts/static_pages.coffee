@@ -96,5 +96,9 @@ Prospero.controller 'IndexCtrl', ($scope, $http) ->
     else
       console.log('attempted to add already called person')
 
-Prospero.controller 'DifCtrl', ($scope) ->
-  $scope.title = "Different controller..."
+Prospero.controller 'DifCtrl', ($scope, $http) ->
+  schedule_success = (response) ->
+    $scope.schedule = response.data
+    console.log($scope.schedule)
+  $http({method: 'GET', url: '/generate.json'})
+    .then(schedule_success)
