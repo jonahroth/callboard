@@ -1,8 +1,14 @@
-<div ng-controller="IndexCtrl" class="row">
+<div ng-controller="IndexCtrl" class="app row">
     <div class="col-md-6" id="actors">
         <div ng-repeat="p in people">
             <div class="actor">
-                {{ p.first }} {{ p.last }}
+                <div class="name">{{ p.first }} {{ p.last }}</div>
+                <div class="conflicts">
+                    <ul>
+                        <li>Conflict 1</li>
+                        <li>Conflict 2</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="actor">
@@ -61,13 +67,15 @@
 
         </div>
     </div>
-    <div class="footer">
-        <div class="container">
+    <div class="navbar-default footer">
+        <div class="container-fullwidth">
             <div class="nav navbar-nav navbar-left">
-                Last saved: A while ago
+                <div class="saved-text">
+                    Last saved: {{ last_saved() }}
+                </div>
             </div>
             <div class="nav navbar-nav navbar-right">
-                <button type="submit" ng-submit="generate_form()" class="btn btn-primary">
+                <button type="submit" ng-submit="generate_form()" class="btn btn-generate">
                     Generate
                 </button>
             </div>

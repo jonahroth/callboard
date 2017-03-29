@@ -24,6 +24,10 @@ Prospero.config(['$locationProvider', ($locationProvider) ->
 ])
 
 Prospero.controller 'IndexCtrl', ($scope, $http) ->
+  $scope.last_save_time = new Date()
+  $scope.touch_last_saved = () -> $scope.last_save_time = new Date()
+  $scope.last_saved = () -> $scope.last_save_time.toUTCString()
+
   $scope.people_message = {person: {}}
   $scope.people_success = (response) ->
     $scope.people.push(response.data)
@@ -80,7 +84,6 @@ Prospero.controller 'IndexCtrl', ($scope, $http) ->
     $scope.person_works_messages[work_id] and current_work and !current_work.called.filter((o) -> o.id == person_id)[0]
 
   $scope.person_works_submit = (id) ->
-    console.log('submitting')
     person_id = parseInt($scope.person_works_messages[id])
     if (should_add_person_work(id, person_id))
       $http({

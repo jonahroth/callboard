@@ -4,14 +4,33 @@
     <title>Callboard</title>
     <%= csrf_meta_tags %>
 
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application', controller_name %>
   </head>
 
   <body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fullwidth">
+      <div class="navbar-header">
+        <div class="navbar-brand">PROSPERO</div>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Home</a></li>
+          <li class="active"><a href="#">Schedules</a></li>
+          <li><a href="#">Reports</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Logout</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+  </nav>
+  <!--
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+   -->
     <%= yield %>
   </body>
 </html>
