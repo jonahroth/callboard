@@ -8,6 +8,8 @@ class Person < ApplicationRecord
   has_many :person_works
   has_many :works, through: :person_works
 
+  accepts_nested_attributes_for :conflicts
+
   def is_cast?
     characters.any?
   end

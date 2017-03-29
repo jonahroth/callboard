@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170329140719) do
+ActiveRecord::Schema.define(version: 20170329172300) do
 
   create_table "character_scenes", force: :cascade do |t|
     t.integer  "character_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20170329140719) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "type"
+    t.string   "frequency"
     t.index ["person_id"], name: "index_conflicts_on_person_id"
   end
 
