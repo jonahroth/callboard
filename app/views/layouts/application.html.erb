@@ -22,7 +22,7 @@
           <li><a href="#">Reports</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Logout</a></li>
+          <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->
@@ -31,6 +31,8 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
    -->
+  <div class="content">
     <%= yield %>
+  </div>
   </body>
 </html>
