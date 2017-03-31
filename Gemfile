@@ -37,6 +37,10 @@ gem 'jbuilder', '~> 2.5'
 
 # Use devise for authentication
 gem 'devise'
+gem 'bootstrap-sass'
+gem 'angular-rails-templates'
+
+gem 'shoulda-matchers'
 
 group :development, :test do
   gem 'rspec-rails'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170315010459) do
+ActiveRecord::Schema.define(version: 20170331152844) do
 
   create_table "character_scenes", force: :cascade do |t|
     t.integer  "character_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20170315010459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "type"
+    t.string   "frequency"
     t.index ["person_id"], name: "index_conflicts_on_person_id"
   end
 
@@ -101,6 +102,15 @@ ActiveRecord::Schema.define(version: 20170315010459) do
     t.string   "cell"
     t.string   "email"
     t.index ["production_id"], name: "index_people_on_production_id"
+  end
+
+  create_table "person_works", force: :cascade do |t|
+    t.integer  "person_id"
+    t.integer  "work_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_person_works_on_person_id"
+    t.index ["work_id"], name: "index_person_works_on_work_id"
   end
 
   create_table "productions", force: :cascade do |t|
@@ -162,6 +172,19 @@ ActiveRecord::Schema.define(version: 20170315010459) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["person_id"], name: "index_users_on_person_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "works", force: :cascade do |t|
+    t.string   "name"
+    t.string   "work_type"
+    t.integer  "duration"
+    t.integer  "break_duration"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "rehearsal_id"
+    t.integer  "production_id"
+    t.index ["production_id"], name: "index_works_on_production_id"
+    t.index ["rehearsal_id"], name: "index_works_on_rehearsal_id"
   end
 
 end

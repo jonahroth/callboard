@@ -1,0 +1,78 @@
+<div ng-controller="IndexCtrl" class="app row">
+    <div class="col-md-6" id="actors">
+        <div ng-repeat="p in people">
+            <div class="actor">
+                <div class="name">{{ p.first }} {{ p.last }}</div>
+            </div>
+        </div>
+        <div class="actor">
+            <form name="personForm" ng-submit="people_submit()">
+                <div class="form-group">
+                    <label>First</label>
+                    <input type="text" name="first" class="form-control" ng-model="people_message.person.first">
+                </div>
+                <div class="form-group">
+                    <label>Last</label>
+                    <input type="text" name="last" class="form-control" ng-model="people_message.person.last">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6" id="works">
+        <div ng-repeat="w in works">
+            <div class="work">
+                {{ w.name }} {{ w.type }}
+                <br>
+                {{ w.duration }} minutes
+                <ul>
+                    <li ng-repeat="c in w.called">
+                        {{ c.first }} {{ c.last }}
+                    </li>
+                    <li>
+                        <form name="personWorkForm_{{w.id}}">
+                            <select ng-model="person_works_messages[w.id]" ng-change="person_works_submit({{w.id}})">
+                                <option disabled selected value>choose a person</option>
+                                <option ng-repeat="person in people" value="{{person.id}}">
+                                    {{ person.first }} {{ person.last }}
+                                </option>
+                            </select>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="work">
+            <form name="workForm" ng-submit="works_submit()">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control" ng-model="works_message.work.name">
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <input type="text" name="work_type" class="form-control" ng-model="works_message.work.work_type">
+                </div>
+                <div class="form-group">
+                    <label>Duration</label>
+                    <input type="number" name="duration" class="form-control" ng-model="works_message.work.duration">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+    <div class="navbar-default footer">
+        <div class="container-fullwidth">
+            <div class="nav navbar-nav navbar-left">
+                <div class="saved-text">
+                    Last saved: {{ last_saved() }}
+                </div>
+            </div>
+            <div class="nav navbar-nav navbar-right">
+                <button type="submit" ng-submit="generate_form()" class="btn btn-generate">
+                    Generate
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
