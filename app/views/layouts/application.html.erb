@@ -13,7 +13,11 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fullwidth">
       <div class="navbar-header">
-        <div class="navbar-brand">PROSPERO</div>
+        <div class="navbar-brand">PROSPERO
+          <% if current_user %>
+            • <%= current_user.person.production.title %>
+          <% end %>
+              </div>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">

@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   resources :characters
   resources :productions
   resources :people
-  devise_for :users
   resources :schedules
+  devise_for :users, controllers: {
+      sessions: 'users/sessions',
+      registrations: 'users/registrations'
+  }
 end

@@ -2,7 +2,7 @@ class WorksController < ApplicationController
   before_action :set_work, only: [:show, :edit, :update, :destroy]
 
   def index
-    @works = Work.all
+    @works = Work.where(production_id: current_user.person.production_id)
   end
 
   def show
@@ -16,7 +16,7 @@ class WorksController < ApplicationController
   end
 
   def create
-    @work = Work.new(work_params)
+    @work = Work.new(work_params.merge(production_id: current_user.production_id))
 
     respond_to do |format|
       if @work.save
@@ -55,7 +55,7 @@ class WorksController < ApplicationController
     end
 
     def work_params
-      params.require(:work).permit(:id, :name, :work_type, :duration, :break_duration,
+      params.require(:work).permit(:id, :name, :production_id, :work_type, :duration, :break_duration,
                                    :person_works_attributes => [:id, :person_id, :work_id])
     end
 end
