@@ -3,6 +3,8 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 #= require_self
 #= require autocomplete
+#= require moment
+#= require xeditable
 #= require_tree ./services/global
 #= require_tree ./services/main
 #= require_tree ./filters/global
@@ -12,57 +14,16 @@
 #= require_tree ./directives/global
 #= require_tree ./directives/main
 
-Prospero = angular.module("prospero", ["ngRoute", "templates", "autocomplete"])
+@Prospero = angular.module("prospero", ["ngRoute", "templates", "autocomplete", "xeditable"])
 
-Prospero.config(['$routeProvider', ($routeProvider) ->
-  $routeProvider.when('/dif', {templateUrl: 'different.html', controller: 'DifCtrl'})
-  $routeProvider.otherwise({templateUrl: 'mainPost.html', controller: 'IndexCtrl'})
+@Prospero.config(['$routeProvider', ($routeProvider) ->
+  $routeProvider.when('/schedule', {templateUrl: 'schedule.html', controller: 'ScheduleCtrl'})
+  $routeProvider.otherwise({templateUrl: 'data_entry.html', controller: 'DataEntryCtrl'})
 ])
 
-Prospero.config(['$locationProvider', ($locationProvider) ->
-  $locationProvider.hashPrefix('');
-])
-
-Prospero.controller 'IndexCtrl', ($scope, $http) ->
-  $scope.last_save_time = new Date()
-  $scope.touch_last_saved = () -> $scope.last_save_time = new Date()
-  $scope.last_saved = () -> $scope.last_save_time.toUTCString()
-
-  $scope.people_message = {person: {}}
-  $scope.people_success = (response) ->
-    $scope.people.push(response.data)
-    $scope.people_message = {person: {}}
-  $scope.people_failure = (response) ->
-    $scope.people.push({first: 'fail'})
-  $scope.people_submit = () ->
-    console.log($scope.people_message)
-    $http({
-      method: 'POST',
-      url: '/people.json',
-      data: $scope.people_message,
-      format: 'application/json'
-    }).then($scope.people_success, $scope.people_failure)
-
-  $scope.works_message = {work: {}}
-  $scope.works_success = (response) ->
-    $scope.works.push(response.data)
-    $scope.works_message = {work: {}}
-  $scope.works_failure = (response) ->
-    $scope.works.push({name: 'fail'})
-  $scope.works_submit = () ->
-    console.log($scope.works_message)
-    $http({
-      method: 'POST',
-      url: '/works.json',
-      data: $scope.works_message,
-      format: 'application/json'
-    }).then($scope.works_success, $scope.works_failure)
-
-  people_load_success_fn = (response) ->
-    $scope.people = (response.data)
-    $scope.people_names = $scope.people.map (obj) ->
-      obj.first + " " + obj.last
-  people_load_failure_fn = (response) -> console.log(response.status)
+@Prospero.run((editableOptions) ->
+  editableOptions.theme = 'bs3';
+)
 
   $http({method: 'GET', url: '/people.json'})
     .then(people_load_success_fn, people_load_failure_fn)

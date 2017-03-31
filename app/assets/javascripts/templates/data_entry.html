@@ -1,8 +1,22 @@
-<div ng-controller="IndexCtrl" class="app row">
+<div ng-controller="DataEntryCtrl" class="app row">
     <div class="col-md-6" id="actors">
         <div ng-repeat="p in people">
             <div class="actor">
                 <div class="name">{{ p.first }} {{ p.last }}</div>
+                <ul>
+                    <li ng-repeat="c in p.conflicts">
+                        {{ conflict_to_string(c) }}
+                    </li>
+                    <li>
+                        <a href="#" editable-combodate="conflicts_messages[{{p.id}}].start">
+                            {{ conflicts_messages[p.id].start.toDateString() || 'Click to set' }}
+                        </a>
+                        <a href="#" editable-combodate="conflicts_messages[{{p.id}}].end">
+                            {{ conflicts_messages[p.id].end.toDateString() || 'Click to set' }}
+                        </a>
+                        <button ng-click="conflicts_submit(p.id)">save</button>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="actor">
@@ -22,9 +36,8 @@
     <div class="col-md-6" id="works">
         <div ng-repeat="w in works">
             <div class="work">
-                {{ w.name }} {{ w.type }}
-                <br>
-                {{ w.duration }} minutes
+                <h4>{{ w.name }} {{ w.type }}</h4>
+                <h5>{{ w.duration }} minutes</h5>
                 <ul>
                     <li ng-repeat="c in w.called">
                         {{ c.first }} {{ c.last }}
