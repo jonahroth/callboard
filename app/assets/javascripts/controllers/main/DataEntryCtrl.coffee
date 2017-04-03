@@ -21,9 +21,8 @@
     $scope.people.push(response.data)
     $scope.people_message = {person: {}}
   $scope.people_failure = (response) ->
-    $scope.people.push({first: 'fail'})
+    console.log('request failed')
   $scope.people_submit = () ->
-    console.log($scope.people_message)
     $http({
       method: 'POST',
       url: '/people.json',
@@ -36,20 +35,14 @@
     $scope.works.push(response.data)
     $scope.works_message = {work: {}}
   $scope.works_failure = (response) ->
-    $scope.works.push({name: 'fail'})
+    console.log('request failed')
   $scope.works_submit = () ->
-    console.log($scope.works_message)
     $http({
       method: 'POST',
       url: '/works.json',
       data: $scope.works_message,
       format: 'application/json'
     }).then($scope.works_success, $scope.works_failure)
-
-  localize_conflict = (conflict) ->
-#    conflict.start += new Date().getTimezoneOffset()
-#    conflict.end += new Date().getTimezoneOffset()
-    return conflict
 
   people_load_success_fn = (response) ->
     $scope.people = (response.data)
@@ -59,11 +52,9 @@
       $scope.conflicts_messages[person_id] != {}
     $scope.conflicts_messages = {}
     offset = new Date().getTimezoneOffset()
-    console.log offset
     $scope.conflicts_messages[p.id] = { frequency: 'O', offset: (offset / 60) } for p in $scope.people
     $scope.conflicts_success = (response) ->
       person = $scope.people.filter((o) -> o.id == response.data.id)[0]
-      console.log response.data.conflicts
       person.conflicts.push(response.data.conflicts[response.data.conflicts.length - 1])
     $scope.conflicts_failure = (response) ->
       console.log('request failed')
