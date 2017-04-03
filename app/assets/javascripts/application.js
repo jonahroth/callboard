@@ -12,10 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.timepicker.js
 //= require bootstrap
+//= require bootstrap-datepicker
 //= require angular
 //= require autocomplete
 //= require angular-route
 //= require angular-rails-templates
+//= require Datepair
+//= require jquery.datepair.js
 //= require static_pages
 //= require_tree ./templates

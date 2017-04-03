@@ -1,4 +1,5 @@
 @Prospero.controller 'DataEntryCtrl', ($scope, $http) ->
+  console.log('running DateEntryCtrl')
   $scope.last_save_time = new Date()
   $scope.touch_last_saved = () -> $scope.last_save_time = new Date()
   $scope.last_saved = () -> $scope.last_save_time.toUTCString()
@@ -53,15 +54,29 @@
     should_add_conflict = (person_id) ->
       $scope.conflicts_messages[person_id] != {}
     $scope.conflicts_messages = {}
-    $scope.conflicts_messages[p.id] = {} for p in $scope.people
+    $scope.conflicts_messages[p.id] = { frequency: 'O' } for p in $scope.people
     $scope.conflicts_success = (response) ->
       person = $scope.people.filter((o) -> o.id == response.data.id)[0]
       person.conflicts.push(response.data.conflicts[response.data.conflicts.length - 1])
     $scope.conflicts_failure = (response) ->
       console.log('request failed')
+    dp = (id) ->
+      $('#conflictInput_' + id + ' .time').timepicker({
+        'showDuration': true,
+        'timeFormat': 'g:ia'
+      })
+      $('#conflictInput_' + id + ' .date').datepicker({
+        'format': 'm/d/yyyy',
+        'autoclose': true
+      })
+      e = document.getElementById('conflictInput_' + id)
+      new Datepair(e) if e isnt null
+
+    dp(p.id) for p in $scope.people
 
     $scope.conflicts_submit = (id) ->
       if should_add_conflict(id)
+        console.log $scope.conflicts_messages[id]
         $http({
           method: 'PUT',
           url: '/people/' + id + '.json',

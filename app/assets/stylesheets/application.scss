@@ -13,9 +13,10 @@
  *= require_tree .
  *= require_self
  *= require autocomplete
+ *= require bootstrap-datepicker3
+ *= require jquery.timepicker.css
  *= require xeditable
  */
-
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 
