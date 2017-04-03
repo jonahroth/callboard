@@ -58,7 +58,7 @@
     restrict: 'AC',
     link: (scope, element) ->
       element.datepicker({
-        format: 'd/m/yyyy',
+        format: 'm/d/yyyy',
         autoclose: true,
         todayHighlight: true
       })

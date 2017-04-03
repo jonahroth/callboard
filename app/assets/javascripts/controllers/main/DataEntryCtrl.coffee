@@ -1,5 +1,4 @@
 @Prospero.controller 'DataEntryCtrl', ($scope, $http) ->
-  console.log('running DateEntryCtrl')
   $scope.last_save_time = new Date()
   $scope.touch_last_saved = () -> $scope.last_save_time = new Date()
   $scope.last_saved = () -> $scope.last_save_time.toUTCString()
@@ -47,6 +46,11 @@
       format: 'application/json'
     }).then($scope.works_success, $scope.works_failure)
 
+  localize_conflict = (conflict) ->
+#    conflict.start += new Date().getTimezoneOffset()
+#    conflict.end += new Date().getTimezoneOffset()
+    return conflict
+
   people_load_success_fn = (response) ->
     $scope.people = (response.data)
     $scope.people_names = $scope.people.map (obj) ->
@@ -54,9 +58,12 @@
     should_add_conflict = (person_id) ->
       $scope.conflicts_messages[person_id] != {}
     $scope.conflicts_messages = {}
-    $scope.conflicts_messages[p.id] = { frequency: 'O' } for p in $scope.people
+    offset = new Date().getTimezoneOffset()
+    console.log offset
+    $scope.conflicts_messages[p.id] = { frequency: 'O', offset: (offset / 60) } for p in $scope.people
     $scope.conflicts_success = (response) ->
       person = $scope.people.filter((o) -> o.id == response.data.id)[0]
+      console.log response.data.conflicts
       person.conflicts.push(response.data.conflicts[response.data.conflicts.length - 1])
     $scope.conflicts_failure = (response) ->
       console.log('request failed')
@@ -76,11 +83,15 @@
 
     $scope.conflicts_submit = (id) ->
       if should_add_conflict(id)
-        console.log $scope.conflicts_messages[id]
+        conflict_data = $scope.conflicts_messages[id]
         $http({
           method: 'PUT',
           url: '/people/' + id + '.json',
-          data: {person: {id: id, conflicts_attributes: [$scope.conflicts_messages[id]]}}
+          data: {person: {id: id, conflicts_attributes: [{
+            'start': new Date(conflict_data.start_date + " " + conflict_data.start_time),
+            'end':   new Date(conflict_data.end_date + " " + conflict_data.end_time),
+            'frequency': conflict_data.frequency
+          }]}}
         }).then($scope.conflicts_success, $scope.conflicts_failure)
       else
         console.log('attempted to add empty conflict')
