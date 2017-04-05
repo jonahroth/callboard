@@ -23,5 +23,9 @@ module Scheduler
     end
     rehearsals
   end
+
+  def fits( work, start_time )
+    end_time = start_time + work.
+  end
 end
 
