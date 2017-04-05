@@ -1,4 +1,11 @@
 @Prospero.controller 'DataEntryCtrl', ($scope, $http) ->
+  $http({
+    method: 'GET',
+    url: '/current_user'
+  }).then((response) ->
+    $scope.current_user = response.data
+  )
+
   $scope.last_save_time = new Date()
   $scope.touch_last_saved = () -> $scope.last_save_time = new Date()
   $scope.last_saved = () -> $scope.last_save_time.toUTCString()

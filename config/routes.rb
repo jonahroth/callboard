@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'static_pages/index'
   root 'static_pages#index'
 
+  get 'current_user' => 'static_pages#current'
+
   get  'api/mobile/code'    => 'mobile#code'
   post 'api/mobile/cell'    => 'mobile#cell'
   get  'api/mobile/refresh' => 'mobile#refresh'
