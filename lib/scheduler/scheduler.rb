@@ -28,12 +28,23 @@ module Scheduler
   end
 
   # Whether this piece of work can be scheduled at a given start time
-  # without conflicts. Perhaps this should be updated later to return an
-  # integer, rather than a simple boolean, in order to express call
-  # priority.
-  def fits( work, start_time )
-    end_time = start_time + work.duration.minutes
-    true
+  # without conflicts. Perhaps this should be updated later to return a
+  # number, rather than a boolean, in order to express call priority.
+  def fits( work, start_datetime )
+    all_conflicts(work, start_datetime).size == 0
   end
+
+  def all_conflicts( work, start_datetime )
+    end_time = start_time + work.duration.minutes
+    conflicts = Set.new
+    work.called.each do |p|
+      p.conflicts.each do |c|
+        # add c to the set if it conflicts with the time
+      end
+    end
+    conflicts
+  end
+
+  private :fits :all_conflicts
 end
 
