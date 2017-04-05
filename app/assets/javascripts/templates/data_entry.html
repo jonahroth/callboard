@@ -19,8 +19,11 @@
                                 to
                                 <input time-picker class="time end" ng-model="conflicts_messages[p.id].end_time"/>
                                 <input date-picker class="date end" ng-model="conflicts_messages[p.id].end_date"/>
-                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
+                            <label>Weekly</label>
+                            <input type="checkbox" ng-model="conflicts_messages[p.id].frequency"
+                                   ng-true-value="'W'" ng-false-value="'O'">
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </form>
                     </li>
                 </ul>

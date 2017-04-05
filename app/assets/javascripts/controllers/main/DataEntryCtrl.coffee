@@ -83,7 +83,7 @@
 
     $scope.conflicts_submit = (id) ->
       if should_add_conflict(id)
-        conflict_data = $scope.conflicts_messages[id]
+        console.log(conflict_data = $scope.conflicts_messages[id])
         $http({
           method: 'PUT',
           url: '/people/' + id + '.json',
