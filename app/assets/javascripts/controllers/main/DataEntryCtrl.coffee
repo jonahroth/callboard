@@ -28,6 +28,7 @@
   $scope.people_success = (response) ->
     $scope.people.push(response.data)
     $scope.people_message = {person: {}}
+    $scope.touch_last_saved()
   $scope.people_failure = (response) ->
     console.log('request failed')
   $scope.people_submit = () ->
@@ -47,6 +48,7 @@
         $scope.people = $scope.people.filter((o) -> o.id != id)
         $scope.people_names = $scope.people.map (obj) ->
           obj.first + " " + obj.last
+        $scope.touch_last_saved()
       ), $scope.people_failure)
 
 
@@ -62,6 +64,7 @@
     $scope.conflicts_success = (response) ->
       person = $scope.people.filter((o) -> o.id == response.data.id)[0]
       person.conflicts.push(response.data.conflicts[response.data.conflicts.length - 1])
+      $scope.touch_last_saved()
     $scope.conflicts_failure = (response) ->
       console.log('request failed')
     dp = (id) ->
@@ -111,6 +114,7 @@
       }).then((() ->
         person = $scope.people.filter((o) -> o.id == person_id)[0]
         person.conflicts = person.conflicts.filter((o) -> o.id != conflict_id)
+        $scope.touch_last_saved()
       ), $scope.conflicts_failure)
 
   people_load_failure_fn = (response) -> console.log(response.status)
@@ -124,6 +128,7 @@
   $scope.works_success = (response) ->
     $scope.works.push(response.data)
     $scope.works_message = {work: {}}
+    $scope.touch_last_saved()
   $scope.works_failure = (response) ->
     console.log('request failed')
   $scope.works_submit = () ->
@@ -141,6 +146,7 @@
         url: '/works/' + id + '.json'
       }).then((() ->
         $scope.works = $scope.works.filter((o) -> o.id != id)
+        $scope.touch_last_saved()
       ), $scope.people_failure)
 
 
@@ -155,6 +161,7 @@
   $scope.person_works_success = (response) ->
     work = $scope.works.filter((o) -> o.id == response.data.id)[0]
     work.called.push(response.data.called[response.data.called.length - 1])
+    $scope.touch_last_saved()
   $scope.person_works_failure = (response) ->
     console.log('request failed')
   should_add_person_work = (work_id, person_id) ->
@@ -181,4 +188,5 @@
     }).then((() ->
       work = $scope.works.filter((o) -> o.id == work_id)[0]
       work.called = work.called.filter((o) -> o.id != pwork_id)
+      $scope.touch_last_saved()
     ), $scope.person_works_failure)
