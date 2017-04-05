@@ -1,8 +1,8 @@
-<div ng-controller="IndexCtrl" class="row">
+<div ng-controller="IndexCtrl" class="app row">
     <div class="col-md-6" id="actors">
         <div ng-repeat="p in people">
             <div class="actor">
-            {{ p.first }} {{ p.last }}
+                <div class="name">{{ p.first }} {{ p.last }}</div>
             </div>
         </div>
         <div class="actor">
@@ -29,6 +29,16 @@
                     <li ng-repeat="c in w.called">
                         {{ c.first }} {{ c.last }}
                     </li>
+                    <li>
+                        <form name="personWorkForm_{{w.id}}">
+                            <select ng-model="person_works_messages[w.id]" ng-change="person_works_submit({{w.id}})">
+                                <option disabled selected value>choose a person</option>
+                                <option ng-repeat="person in people" value="{{person.id}}">
+                                    {{ person.first }} {{ person.last }}
+                                </option>
+                            </select>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -46,22 +56,20 @@
                     <label>Duration</label>
                     <input type="number" name="duration" class="form-control" ng-model="works_message.work.duration">
                 </div>
-                <div class="form-group">
-                    <label>Called</label>
-                    <autocomplete ng-model="works_message.work.called" click-activation="false" data="people_names"></autocomplete>
-                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
 
         </div>
     </div>
-    <div class="footer">
-        <div class="container">
+    <div class="navbar-default footer">
+        <div class="container-fullwidth">
             <div class="nav navbar-nav navbar-left">
-                Last saved: A while ago
+                <div class="saved-text">
+                    Last saved: {{ last_saved() }}
+                </div>
             </div>
             <div class="nav navbar-nav navbar-right">
-                <button type="submit" ng-submit="generate_form()" class="btn btn-primary">
+                <button type="submit" ng-submit="generate_form()" class="btn btn-generate">
                     Generate
                 </button>
             </div>

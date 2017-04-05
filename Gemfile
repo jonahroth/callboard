@@ -40,6 +40,8 @@ gem 'devise'
 gem 'bootstrap-sass'
 gem 'angular-rails-templates'
 
+gem 'shoulda-matchers'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'

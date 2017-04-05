@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
 
   def index
-    @people = Person.all
+    @people = Person.where(production_id: current_user.person.production_id)
   end
 
   def show
@@ -16,6 +16,7 @@ class PeopleController < ApplicationController
   end
 
   def create
+    person_params[:production_id] = current_user.production_id
     @person = Person.new(person_params)
 
     respond_to do |format|

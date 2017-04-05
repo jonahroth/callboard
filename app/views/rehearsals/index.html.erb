@@ -11,7 +11,7 @@
   </thead>
 
   <tbody>
-    <% @rehearsals.each do |rehearsal| %>
+    <% (@rehearsals || rehearsals).each do |rehearsal| %>
       <tr>
         <td><%= rehearsal.title %></td>
         <td><%= link_to 'Show', rehearsal %></td>

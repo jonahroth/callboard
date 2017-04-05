@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327135036) do
+ActiveRecord::Schema.define(version: 20170331152844) do
 
   create_table "character_scenes", force: :cascade do |t|
     t.integer  "character_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20170327135036) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "type"
+    t.string   "frequency"
     t.index ["person_id"], name: "index_conflicts_on_person_id"
   end
 
@@ -180,6 +181,10 @@ ActiveRecord::Schema.define(version: 20170327135036) do
     t.integer  "break_duration"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "rehearsal_id"
+    t.integer  "production_id"
+    t.index ["production_id"], name: "index_works_on_production_id"
+    t.index ["rehearsal_id"], name: "index_works_on_rehearsal_id"
   end
 
 end

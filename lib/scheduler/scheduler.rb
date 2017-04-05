@@ -16,10 +16,13 @@ module Scheduler
         new_rehearsal = Rehearsal.create(created_at: start,
                                          updated_at: start)
       end
+      c.save
+      new_rehearsal.save
     end
     if not rehearsals.include?(new_rehearsal)
       new_rehearsal.schedule[-1].break_duration = 0
       rehearsals << new_rehearsal
+      new_rehearsal.save
     end
     rehearsals
   end

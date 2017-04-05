@@ -1,1 +1,21 @@
-<h2> {{ title }}</h2>
+<div ng-controller="DifCtrl" class="row">
+    <br><br><br><br><br>
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+    <table ng-repeat="item in schedule" class="table">
+        <h1>{{ item.updated_at }}</h1>
+        <tr>
+            <th>Name</th>
+            <th>Work Type</th>
+            <th>Duration</th>
+            <th>Break Duration</th>
+        </tr>
+        <tr ng-repeat="item in item.schedule">
+            <td>{{item.name}}</td>
+            <td>{{item.work_type}}</td>
+            <td>{{item.duration}}</td>
+            <td>{{item.break_duration}}</td>
+        </tr>
+    </table>
+    </div>
+</div>

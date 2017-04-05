@@ -1,4 +1,5 @@
 class SchedulesController < ApplicationController
+  include Scheduler
   before_action :set_schedule, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -27,6 +28,12 @@ class SchedulesController < ApplicationController
         format.json { render json: @schedule.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # TODO - get rid of this
+  def generate
+    rehearsals = Scheduler.schedule(Work.all)
+    render 'rehearsals/index', locals: {rehearsals: rehearsals}
   end
 
   def update

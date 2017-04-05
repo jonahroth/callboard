@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   post 'api/mobile/cell'    => 'mobile#cell'
   get  'api/mobile/refresh' => 'mobile#refresh'
 
+  # TODO: get rid of this
+  get 'generate' => 'schedules#generate'
+
   resources :check_ins
   resources :crew_calls
   resources :department_notes
@@ -22,6 +25,9 @@ Rails.application.routes.draw do
   resources :characters
   resources :productions
   resources :people
-  devise_for :users
   resources :schedules
+  devise_for :users, controllers: {
+      sessions: 'users/sessions',
+      registrations: 'users/registrations'
+  }
 end

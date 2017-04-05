@@ -17,3 +17,15 @@
 
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+.content {
+  padding-top: 60px;
+}
