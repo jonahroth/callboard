@@ -2,6 +2,7 @@
     <div class="col-md-6" id="actors">
         <div ng-repeat="p in people">
             <div class="actor">
+                <div class="delete glyphicon glyphicon-remove" ng-click="people_delete(p.id)"></div>
                 <div class="name">{{ p.first }} {{ p.last }}</div>
                 <ul>
                     <li ng-repeat="c in p.conflicts">

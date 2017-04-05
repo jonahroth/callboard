@@ -50,6 +50,11 @@ body, .content, .row {
     font-variant-caps: small-caps;
     font-weight: bold;
   }
+
+  .delete {
+    color: darkred;
+    float: right;
+  }
 }
 
 .btn-generate {

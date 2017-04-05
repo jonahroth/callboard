@@ -4,7 +4,7 @@ class Person < ApplicationRecord
   belongs_to :production, optional: true
   has_many :characters
   has_many :crew_roles
-  has_many :conflicts
+  has_many :conflicts, dependent: :delete_all
   has_many :person_works
   has_many :works, through: :person_works
 

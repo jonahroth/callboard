@@ -29,6 +29,17 @@
       data: $scope.people_message,
       format: 'application/json'
     }).then($scope.people_success, $scope.people_failure)
+  $scope.people_delete = (id) ->
+    delete_person = confirm('Are you sure you want to delete this person?')
+    if delete_person
+      $http({
+        method: 'DELETE',
+        url: '/people/' + id + '.json'
+      }).then((() ->
+        $scope.people = $scope.people.filter((o) -> o.id != id)
+        $scope.people_names = $scope.people.map (obj) ->
+          obj.first + " " + obj.last
+      ), $scope.people_failure)
 
   $scope.works_message = {work: {}}
   $scope.works_success = (response) ->
