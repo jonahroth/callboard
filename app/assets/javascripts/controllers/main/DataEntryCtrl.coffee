@@ -97,6 +97,18 @@
         }).then($scope.conflicts_success, $scope.conflicts_failure)
       else
         console.log('attempted to add empty conflict')
+    $scope.conflicts_delete = (person_id, conflict_id) ->
+      $http({
+        method: 'PUT',
+        url: '/people/' + person_id + '.json',
+        data: {person: {id: person_id, conflicts_attributes: [{
+          id: conflict_id,
+          _destroy: true
+        }] }}
+      }).then((() ->
+        person = $scope.people.filter((o) -> o.id == person_id)[0]
+        person.conflicts = person.conflicts.filter((o) -> o.id != conflict_id)
+      ), $scope.conflicts_failure)
 
   people_load_failure_fn = (response) -> console.log(response.status)
 

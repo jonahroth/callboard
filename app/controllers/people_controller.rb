@@ -57,6 +57,6 @@ class PeopleController < ApplicationController
 
     def person_params
       params.require(:person).permit(:first, :last, :id,
-                                     conflicts_attributes: [:start, :end, :frequency, :id])
+                                     conflicts_attributes: [:start, :end, :frequency, :id, :_destroy])
     end
 end
