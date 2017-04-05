@@ -27,8 +27,13 @@ module Scheduler
     rehearsals
   end
 
+  # Whether this piece of work can be scheduled at a given start time
+  # without conflicts. Perhaps this should be updated later to return an
+  # integer, rather than a simple boolean, in order to express call
+  # priority.
   def fits( work, start_time )
-    end_time = start_time + work.
+    end_time = start_time + work.duration.minutes
+    true
   end
 end
 
