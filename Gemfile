@@ -39,6 +39,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'angular-rails-templates'
+gem 'bootstrap-datepicker-rails'
+gem 'jquery-timepicker-rails'
 
 gem 'shoulda-matchers'
 
