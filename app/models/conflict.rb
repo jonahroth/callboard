@@ -22,4 +22,8 @@ class Conflict < ApplicationRecord
   def weekly?
     frequency == WEEKLY
   end
+
+  def fits?(start_time, end_time)
+    true
+  end
 end
