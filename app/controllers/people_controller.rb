@@ -16,8 +16,8 @@ class PeopleController < ApplicationController
   end
 
   def create
-    person_params[:production_id] = current_user.person.production_id
     @person = Person.new(person_params)
+    @person.production_id = current_user.person.production_id
 
     respond_to do |format|
       if @person.save
@@ -56,7 +56,7 @@ class PeopleController < ApplicationController
     end
 
     def person_params
-      params.require(:person).permit(:first, :last, :id,
+      params.require(:person).permit(:first, :last, :id, :production_id,
                                      conflicts_attributes: [:start, :end, :frequency, :id, :_destroy])
     end
 end
