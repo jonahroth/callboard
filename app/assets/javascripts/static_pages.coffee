@@ -11,6 +11,10 @@
   $routeProvider.otherwise({templateUrl: 'data_entry.html', controller: 'DataEntryCtrl'})
 ])
 
+@Prospero.config(['$locationProvider', ($locationProvider) ->
+  $locationProvider.hashPrefix('')
+])
+
 @Prospero.run((editableOptions) ->
   editableOptions.theme = 'bs3';
 )
