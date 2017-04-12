@@ -69,3 +69,16 @@ body, .content, .row {
   border-radius: 0px;
   border: 5px solid $border;
 }
+
+// SCHEDULES
+
+.sch-work {
+  width: auto;
+  margin: 6pt;
+  padding: 6pt;
+  border: 1px solid black;
+}
+
+.swappable {
+  background-color: green;
+}

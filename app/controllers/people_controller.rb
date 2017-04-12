@@ -16,6 +16,7 @@ class PeopleController < ApplicationController
   end
 
   def create
+    debugger
     person_params[:production_id] = current_user.person.production_id
     @person = Person.new(person_params)
 
