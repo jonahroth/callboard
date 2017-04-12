@@ -21,5 +21,6 @@
 //= require angular-rails-templates
 //= require Datepair
 //= require jquery.datepair.js
+//= require angular-dragdrop
 //= require static_pages
 //= require_tree ./templates

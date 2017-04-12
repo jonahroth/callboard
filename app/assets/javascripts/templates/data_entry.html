@@ -47,12 +47,12 @@
         <div ng-repeat="w in works">
             <div class="work">
                 <div class="delete glyphicon glyphicon-remove" ng-click="works_delete(w.id)"></div>
-                <h4>{{ w.name }} {{ w.type }} {{w.id}}</h4>
+                <h4>{{ w.name }} {{ w.type }}</h4>
                 <h5>{{ w.duration }} minutes</h5>
                 <ul>
                     <li ng-repeat="c in w.called">
                         <div class="delete-inline glyphicon glyphicon-remove" ng-click="person_works_delete(w.id, c.id)"></div>
-                        {{ c.first }} {{ c.last }} {{c.id}}
+                        {{ c.first }} {{ c.last }}
                     </li>
                     <li>
                         <form name="personWorkForm_{{w.id}}">
@@ -94,9 +94,9 @@
                 </div>
             </div>
             <div class="nav navbar-nav navbar-right">
-                <button type="submit" ng-submit="generate_form()" class="btn btn-generate">
+                <a href="/#/schedule" type="submit" ng-click="generate_schedule()" class="btn btn-generate">
                     Generate
-                </button>
+                </a>
             </div>
         </div>
     </div>

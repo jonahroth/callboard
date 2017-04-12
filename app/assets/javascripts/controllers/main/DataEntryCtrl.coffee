@@ -23,6 +23,9 @@
     else
       return human_date(conflict_start) + ": " + human_time(conflict_start) + " - " + human_time(conflict_end)
 
+  $scope.generate_schedule = () ->
+    window.location.href = '/#/schedule'
+
   ### PEOPLE AND CONFLICTS ###
   $scope.people_message = {person: {}}
   $scope.people_success = (response) ->
