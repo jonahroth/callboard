@@ -4,7 +4,7 @@ class Work < ApplicationRecord
   belongs_to :rehearsal, optional: true
   belongs_to :production
 
-  accepts_nested_attributes_for :person_works
+  accepts_nested_attributes_for :person_works, allow_destroy: true
 
   # validate do
   #   if rehearsal && rehearsal.production != production

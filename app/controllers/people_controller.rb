@@ -16,7 +16,7 @@ class PeopleController < ApplicationController
   end
 
   def create
-    person_params[:production_id] = current_user.production_id
+    person_params[:production_id] = current_user.person.production_id
     @person = Person.new(person_params)
 
     respond_to do |format|

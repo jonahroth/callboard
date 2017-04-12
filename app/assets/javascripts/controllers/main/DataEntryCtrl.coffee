@@ -11,22 +11,27 @@
   $scope.last_saved = () -> $scope.last_save_time.toUTCString()
 
   days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  human_date = (c) -> c.toDateString().substring(0,10)
-  human_time = (c) -> c.toTimeString().substring(0,5)
+  human_date = (c) -> c.toDateString().substring(0, 10)
+  human_time = (c) -> c.toTimeString().substring(0, 5)
 
   $scope.conflict_to_string = (c) ->
     conflict_start = new Date(c.start)
-    conflict_end   = new Date(c.end)
+    conflict_end = new Date(c.end)
     if c.frequency == 'W'
       day = days[conflict_start.getDay()]
       return "Every " + day + ": " + human_time(conflict_start) + " - " + human_time(conflict_end)
     else
       return human_date(conflict_start) + ": " + human_time(conflict_start) + " - " + human_time(conflict_end)
 
+  $scope.generate_schedule = () ->
+    window.location.href = '/#/schedule'
+
+  ### PEOPLE AND CONFLICTS ###
   $scope.people_message = {person: {}}
   $scope.people_success = (response) ->
     $scope.people.push(response.data)
     $scope.people_message = {person: {}}
+    $scope.touch_last_saved()
   $scope.people_failure = (response) ->
     console.log('request failed')
   $scope.people_submit = () ->
@@ -46,21 +51,9 @@
         $scope.people = $scope.people.filter((o) -> o.id != id)
         $scope.people_names = $scope.people.map (obj) ->
           obj.first + " " + obj.last
+        $scope.touch_last_saved()
       ), $scope.people_failure)
 
-  $scope.works_message = {work: {}}
-  $scope.works_success = (response) ->
-    $scope.works.push(response.data)
-    $scope.works_message = {work: {}}
-  $scope.works_failure = (response) ->
-    console.log('request failed')
-  $scope.works_submit = () ->
-    $http({
-      method: 'POST',
-      url: '/works.json',
-      data: $scope.works_message,
-      format: 'application/json'
-    }).then($scope.works_success, $scope.works_failure)
 
   people_load_success_fn = (response) ->
     $scope.people = (response.data)
@@ -70,10 +63,11 @@
       $scope.conflicts_messages[person_id] != {}
     $scope.conflicts_messages = {}
     offset = new Date().getTimezoneOffset()
-    $scope.conflicts_messages[p.id] = { frequency: 'O', offset: (offset / 60) } for p in $scope.people
+    $scope.conflicts_messages[p.id] = {frequency: 'O', offset: (offset / 60)} for p in $scope.people
     $scope.conflicts_success = (response) ->
       person = $scope.people.filter((o) -> o.id == response.data.id)[0]
       person.conflicts.push(response.data.conflicts[response.data.conflicts.length - 1])
+      $scope.touch_last_saved()
     $scope.conflicts_failure = (response) ->
       console.log('request failed')
     dp = (id) ->
@@ -92,15 +86,19 @@
 
     $scope.conflicts_submit = (id) ->
       if should_add_conflict(id)
-        conflict_data = $scope.conflicts_messages[id]
+        console.log(conflict_data = $scope.conflicts_messages[id])
         $http({
           method: 'PUT',
           url: '/people/' + id + '.json',
-          data: {person: {id: id, conflicts_attributes: [{
-            'start': new Date(conflict_data.start_date + " " + conflict_data.start_time),
-            'end':   new Date(conflict_data.end_date + " " + conflict_data.end_time),
-            'frequency': conflict_data.frequency
-          }]}}
+          data: {
+            person: {
+              id: id, conflicts_attributes: [{
+                'start': new Date(conflict_data.start_date + " " + conflict_data.start_time),
+                'end': new Date(conflict_data.end_date + " " + conflict_data.end_time),
+                'frequency': conflict_data.frequency
+              }]
+            }
+          }
         }).then($scope.conflicts_success, $scope.conflicts_failure)
       else
         console.log('attempted to add empty conflict')
@@ -108,13 +106,18 @@
       $http({
         method: 'PUT',
         url: '/people/' + person_id + '.json',
-        data: {person: {id: person_id, conflicts_attributes: [{
-          id: conflict_id,
-          _destroy: true
-        }] }}
+        data: {
+          person: {
+            id: person_id, conflicts_attributes: [{
+              id: conflict_id,
+              _destroy: true
+            }]
+          }
+        }
       }).then((() ->
         person = $scope.people.filter((o) -> o.id == person_id)[0]
         person.conflicts = person.conflicts.filter((o) -> o.id != conflict_id)
+        $scope.touch_last_saved()
       ), $scope.conflicts_failure)
 
   people_load_failure_fn = (response) -> console.log(response.status)
@@ -122,8 +125,37 @@
   $http({method: 'GET', url: '/people.json'})
     .then(people_load_success_fn, people_load_failure_fn)
 
+  ### WORK AND PERSONWORK ###
+
+  $scope.works_message = {work: {}}
+  $scope.works_success = (response) ->
+    $scope.works.push(response.data)
+    $scope.works_message = {work: {}}
+    $scope.touch_last_saved()
+  $scope.works_failure = (response) ->
+    console.log('request failed')
+  $scope.works_submit = () ->
+    $http({
+      method: 'POST',
+      url: '/works.json',
+      data: $scope.works_message,
+      format: 'application/json'
+    }).then($scope.works_success, $scope.works_failure)
+  $scope.works_delete = (id) ->
+    delete_work = confirm('Are you sure you want to delete this work?')
+    if delete_work
+      $http({
+        method: 'DELETE',
+        url: '/works/' + id + '.json'
+      }).then((() ->
+        $scope.works = $scope.works.filter((o) -> o.id != id)
+        $scope.touch_last_saved()
+      ), $scope.people_failure)
+
+
   works_load_success_fn = (response) ->
     $scope.works = (response.data)
+    console.log $scope.works
   works_load_failure_fn = (response) -> console.log(response.status)
   $http({method: 'GET', url: '/works.json'})
     .then(works_load_success_fn, works_load_failure_fn)
@@ -132,6 +164,7 @@
   $scope.person_works_success = (response) ->
     work = $scope.works.filter((o) -> o.id == response.data.id)[0]
     work.called.push(response.data.called[response.data.called.length - 1])
+    $scope.touch_last_saved()
   $scope.person_works_failure = (response) ->
     console.log('request failed')
   should_add_person_work = (work_id, person_id) ->
@@ -150,3 +183,13 @@
       $scope.person_works_messages[id] = null
     else
       console.log('attempted to add already called person')
+  $scope.person_works_delete = (work_id, pwork_id) ->
+    $http({
+      method: 'PUT',
+      url: '/works/' + work_id + '.json',
+      data: {work: {id: work_id, person_works_attributes: [{id: pwork_id, _destroy: true}]}}
+    }).then((() ->
+      work = $scope.works.filter((o) -> o.id == work_id)[0]
+      work.called = work.called.filter((o) -> o.id != pwork_id)
+      $scope.touch_last_saved()
+    ), $scope.person_works_failure)
