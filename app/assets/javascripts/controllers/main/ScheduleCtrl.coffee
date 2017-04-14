@@ -29,16 +29,7 @@
     work = $scope.get_dropped_work(event)
     $scope.dropped_work = $scope.get_dropped_work(event)
     $scope.swap($scope.dragged_work, $scope.dropped_work)
-
     $scope.update_work($scope.dragged_work, $scope.dropped_work)
-    $scope.update_work($scope.dropped_work, $scope.dragged_work)
-
-    tmp = {rehearsal_id: $scope.dragged_work.rehearsal_id, sequence_id: $scope.dragged_work.sequence_id}
-    $scope.dragged_work.sequence_id = $scope.dropped_work.sequence_id
-    $scope.dragged_work.rehearsal_id = $scope.dropped_work.rehearsal_id
-    $scope.dropped_work.sequence_id = tmp.sequence_id
-    $scope.dropped_work.rehearsal_id = tmp.rehearsal_id
-
 
   $scope.swap = (work1, work2) ->
     rehearsal1 = null
@@ -75,7 +66,6 @@
     target.style.removeProperty('top')
     target.style.removeProperty('left')
 
-
   $scope.get_dragged_work = (event) ->
     id = parseInt(event.target.id.match(/\d+/))
     $scope.get_work(id)
@@ -91,11 +81,28 @@
     null
 
   $scope.update_work = (work, other_work) ->
+    console.log work.id + " " + work.sequence_id + " " + work.rehearsal_id
+    console.log other_work.id + " " + other_work.sequence_id + " " + other_work.rehearsal_id
+    tmp = {rehearsal_id: $scope.dragged_work.rehearsal_id, sequence_id: $scope.dragged_work.sequence_id}
+    $scope.dragged_work.sequence_id = $scope.dropped_work.sequence_id
+    $scope.dragged_work.rehearsal_id = $scope.dropped_work.rehearsal_id
+    $scope.dropped_work.sequence_id = tmp.sequence_id
+    $scope.dropped_work.rehearsal_id = tmp.rehearsal_id
+    console.log work.id + " " + work.sequence_id + " " + work.rehearsal_id
+    console.log other_work.id + " " + other_work.sequence_id + " " + other_work.rehearsal_id
+
+
     $http({
       method: 'PUT',
       url: '/works/' + work.id + '.json',
-      data: {work: {sequence_id: other_work.sequence_id, rehearsal_id: other_work.rehearsal_id}}
-    })
+      data: {work: {sequence_id: work.sequence_id, rehearsal_id: work.rehearsal_id}}
+    }).then(() ->
+      $http({
+        method: 'PUT',
+        url: '/works/' + other_work.id + '.json',
+        data: {work: {sequence_id: other_work.sequence_id, rehearsal_id: other_work.rehearsal_id}}
+      })
+    )
 
   $http({method: 'GET', url: '/generate.json'})
     .then(schedule_success)

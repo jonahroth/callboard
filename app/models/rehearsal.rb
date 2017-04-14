@@ -10,4 +10,11 @@ class Rehearsal < ApplicationRecord
   def people_called
     rehearsal_scenes.map(&:scene).map(&:people).flatten.uniq
   end
+
+  def resequence_all_work
+    works.each_with_index do |w, i|
+      w.sequence_id = i+1
+      w.save
+    end
+  end
 end

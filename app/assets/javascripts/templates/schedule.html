@@ -2,14 +2,14 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <div class="sch-rehearsal" ng-repeat="item in schedule.rehearsals">
-                <h1>{{ date_format(item.start_time) }}</h1>
+                <p>{{ date_format(item.start_time) }}</p>
                 <div class="sch-work" ng-repeat="work in item.works" data-drag="true" data-drop="true"
                      ng-class="{swappable: work.swappable}"
                      jqyoui-draggable="{onStart: 'on_work_drag', onStop: 'on_work_drag_end', animate: true}"
                      jqyoui-droppable="{onDrop: 'on_drop'}"
                      data-jqyoui-options="{revert: 'invalid'}"
                      id="work_{{work.id}}">
-                    <h2>{{work.name}} {{work.sequence_id}}</h2>
+                    <p>{{work.name}}</p>
                     <p>{{work.work_type}} • {{work.duration}}m • {{work.break_duration}}m break</p>
                 </div>
         </div>
