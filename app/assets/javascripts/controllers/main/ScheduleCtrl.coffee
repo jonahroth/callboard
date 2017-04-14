@@ -9,37 +9,41 @@
   $scope.swappable = (work1, work2) ->
     true
 
-  $scope.on_drop = (work, args) ->
-    console.log work
-    console.log args
+  $scope.on_drop = (event) ->
 
-  $scope.swap = (work1, work2) ->
+
+  $scope.swap = (id1, id2) ->
+    rehearsal1 = null
+    rehearsal2 = null
+    for rehearsal in $scope.schedule.rehearsals
+      rehearsal1 = rehearsal if work1 in rehearsal.works
+      rehearsal2 = rehearsal if work2 in rehearsal.works
+    index1 = rehearsal1.works.indexOf(work1)
+    index2 = rehearsal2.works.indexOf(work2)
     tmp = work1
-    work1 = work2
-    work2 = tmp
+    rehearsal1.works[index1] = work2
+    rehearsal2.works[index2] = work1
 
   $scope.all_swappable = (work1) ->
     swappable_works = []
     for rehearsal in $scope.schedule.rehearsals
       for work in rehearsal.works
         if $scope.swappable(work1, work)
-          swappable_works << work.id
+          swappable_works.push work.id
     swappable_works
 
-  $scope.highlight_all_swappable = (work) ->
-    console.log("I was fired!")
+  $scope.highlight_all_swappable = (event) ->
+    console.log orig_work
     for rehearsal in $scope.schedule.rehearsals
       for work in rehearsal.works
-        work.swappable = true
-        console.log work.id + " " + work.swappable
+        if work.id in $scope.all_swappable(orig_work)
+          work.swappable = true
     $scope.$digest()
 
-  $scope.unhighlight_all_swappable = (work) ->
-    console.log("I was fired too!")
+  $scope.unhighlight_all_swappable = (event) ->
     for rehearsal in $scope.schedule.rehearsals
       for work in rehearsal.works
         work.swappable = false
-        console.log work.id + " " + work.swappable
     $scope.$digest()
 
 
