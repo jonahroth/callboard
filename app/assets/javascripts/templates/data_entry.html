@@ -32,6 +32,7 @@
         </div>
         <div class="actor">
             <form name="personForm" ng-submit="people_submit()">
+            	<h4>Name</h4>
                 <div class="form-group">
                     <label>First</label>
                     <input type="text" name="first" class="form-control" ng-model="people_message.person.first">
@@ -59,7 +60,7 @@
                     <li>
                         <form name="personWorkForm_{{w.id}}">
                             <select ng-model="person_works_messages[w.id]" ng-change="person_works_submit({{w.id}})">
-                                <option disabled selected value>choose a person</option>
+                                <option disabled selected value>add a person</option>
                                 <option ng-repeat="person in people" value="{{person.id}}">
                                     {{ person.first }} {{ person.last }}
                                 </option>
