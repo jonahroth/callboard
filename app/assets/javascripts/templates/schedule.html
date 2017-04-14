@@ -3,8 +3,12 @@
     <div class="col-md-10">
         <div class="sch-rehearsal" ng-repeat="item in schedule.rehearsals">
                 <h1>{{ date_format(item.start_time) }}</h1>
-                <div class="sch-work" ng-repeat="work in item.works" data-drag="true" jqyoui-draggable="{onStart: 'highlight_all_swappable(work)', onStop: 'unhighlight_all_swappable(work)'}" data-jqyoui-options="{revert: 'invalid'}">
-                    <h2>{{work.name}}</h2>
+                <div class="sch-work" ng-repeat="work in item.works" data-drag="true"
+                     ng-class="{swappable: work.swappable}"
+                     jqyoui-draggable="{onStart: 'highlight_all_swappable(work)', onStop: 'unhighlight_all_swappable(work)'}"
+                     jqyoui-droppable="{onDrop: 'on_drop(work, args)' }"
+                     data-jqyoui-options="{revert: 'invalid'}">
+                    <h2>{{work.name}} {{work.swappable}}</h2>
                     <p>{{work.work_type}} • {{work.duration}}m • {{work.break_duration}}m break</p>
                 </div>
         </div>
