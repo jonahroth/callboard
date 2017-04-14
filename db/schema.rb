@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170331152844) do
+ActiveRecord::Schema.define(version: 20170412132659) do
 
   create_table "character_scenes", force: :cascade do |t|
     t.integer  "character_id"
@@ -138,8 +138,13 @@ ActiveRecord::Schema.define(version: 20170331152844) do
 
   create_table "rehearsals", force: :cascade do |t|
     t.string   "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.datetime "start_time"
+    t.integer  "production_id"
+    t.integer  "schedule_id"
+    t.index ["production_id"], name: "index_rehearsals_on_production_id"
+    t.index ["schedule_id"], name: "index_rehearsals_on_schedule_id"
   end
 
   create_table "scenes", force: :cascade do |t|
@@ -151,8 +156,10 @@ ActiveRecord::Schema.define(version: 20170331152844) do
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "production_id"
+    t.index ["production_id"], name: "index_schedules_on_production_id"
   end
 
   create_table "users", force: :cascade do |t|

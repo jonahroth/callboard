@@ -3,6 +3,9 @@ require 'digest'
 class Production < ApplicationRecord
   has_many :people
   has_many :scenes
+  has_many :works
+  has_many :rehearsals
+  has_many :schedules
 
   after_create :generate_ios_code!
 

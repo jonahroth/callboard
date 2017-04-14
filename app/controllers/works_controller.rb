@@ -16,7 +16,7 @@ class WorksController < ApplicationController
   end
 
   def create
-    @work = Work.new(work_params.merge(production_id: current_user.production_id))
+    @work = Work.new(work_params.merge(production_id: current_user.person.production_id))
 
     respond_to do |format|
       if @work.save
@@ -56,6 +56,6 @@ class WorksController < ApplicationController
 
     def work_params
       params.require(:work).permit(:id, :name, :production_id, :work_type, :duration, :break_duration,
-                                   :person_works_attributes => [:id, :person_id, :work_id])
+                                   :person_works_attributes => [:id, :person_id, :work_id, :_destroy])
     end
 end

@@ -30,10 +30,17 @@ class SchedulesController < ApplicationController
     end
   end
 
-  # TODO - get rid of this
   def generate
-    rehearsals = Scheduler.schedule(Work.all)
-    render 'rehearsals/index', locals: {rehearsals: rehearsals}
+    current_production = current_user.person.production
+    if current_production.schedules.any?
+      @schedule = current_production.schedules.first
+      render :show, location: @schedule, format: :json
+    else
+      @schedule = Scheduler.schedule(current_production.works)
+      @schedule.production = current_production
+      @schedule.save!
+      render :show, location: @schedule, status: :created, format: :json
+    end
   end
 
   def update
@@ -57,11 +64,11 @@ class SchedulesController < ApplicationController
   end
 
   private
-    def set_schedule
-      @schedule = Schedule.find(params[:id])
-    end
+  def set_schedule
+    @schedule = Schedule.find(params[:id])
+  end
 
-    def schedule_params
-      params.fetch(:schedule, {})
-    end
+  def schedule_params
+    params.fetch(:schedule, {})
+  end
 end

@@ -1,6 +1,6 @@
-json.extract! rehearsal, :id, :title, :created_at, :updated_at
+json.extract! rehearsal, :id, :title, :start_time, :created_at, :updated_at
 json.url rehearsal_url(rehearsal, format: :json)
-json.schedule rehearsal.schedule do |work|
+json.works rehearsal.works do |work|
   json.name work.name
   json.work_type work.work_type
   json.duration work.duration
