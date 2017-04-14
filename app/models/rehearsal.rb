@@ -3,7 +3,7 @@ class Rehearsal < ApplicationRecord
   belongs_to :schedule
   has_many :rehearsal_scenes
   has_many :notes
-  has_many :works
+  has_many :works, -> { order(:sequence_id) }
 
   accepts_nested_attributes_for :works
 

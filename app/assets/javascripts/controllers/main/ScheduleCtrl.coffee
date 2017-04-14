@@ -29,8 +29,15 @@
     work = $scope.get_dropped_work(event)
     $scope.dropped_work = $scope.get_dropped_work(event)
     $scope.swap($scope.dragged_work, $scope.dropped_work)
-    $scope.post_schedule_update($scope.dragged_work, $scope.dropped_work.rehearsal_id)
-    $scope.post_schedule_update($scope.dropped_work, $scope.dragged_work.rehearsal_id)
+
+    $scope.update_work($scope.dragged_work, $scope.dropped_work)
+    $scope.update_work($scope.dropped_work, $scope.dragged_work)
+
+    tmp = {rehearsal_id: $scope.dragged_work.rehearsal_id, sequence_id: $scope.dragged_work.sequence_id}
+    $scope.dragged_work.sequence_id = $scope.dropped_work.sequence_id
+    $scope.dragged_work.rehearsal_id = $scope.dropped_work.rehearsal_id
+    $scope.dropped_work.sequence_id = tmp.sequence_id
+    $scope.dropped_work.rehearsal_id = tmp.rehearsal_id
 
 
   $scope.swap = (work1, work2) ->
@@ -83,11 +90,11 @@
         return work if work.id == id
     null
 
-  $scope.post_schedule_update = (work, rehearsal_id) ->
+  $scope.update_work = (work, other_work) ->
     $http({
       method: 'PUT',
       url: '/works/' + work.id + '.json',
-      data: {work: {rehearsal_id: rehearsal_id}}
+      data: {work: {sequence_id: other_work.sequence_id, rehearsal_id: other_work.rehearsal_id}}
     })
 
   $http({method: 'GET', url: '/generate.json'})
