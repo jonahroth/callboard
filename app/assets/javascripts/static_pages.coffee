@@ -4,7 +4,7 @@
 #= require xeditable
 #= require_tree ./controllers/main
 
-@Prospero = angular.module("prospero", ["ngRoute", "templates", "autocomplete", "xeditable"])
+@Prospero = angular.module("prospero", ["ngRoute", "templates", "autocomplete", "ngDragDrop"])
 
 @Prospero.config(['$routeProvider', ($routeProvider) ->
   $routeProvider.when('/schedule', {templateUrl: 'schedule.html', controller: 'ScheduleCtrl'})
@@ -14,10 +14,6 @@
 @Prospero.config(['$locationProvider', ($locationProvider) ->
   $locationProvider.hashPrefix('')
 ])
-
-@Prospero.run((editableOptions) ->
-  editableOptions.theme = 'bs3';
-)
 
 @Prospero.config(['$compileProvider', ($compileProvider) ->
   $compileProvider.debugInfoEnabled(true)
