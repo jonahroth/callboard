@@ -13,17 +13,23 @@
     true
 
   $scope.on_work_drag = (event) ->
+    console.log event
     $scope.dragged_work = $scope.get_dragged_work(event)
     $scope.highlight_all_swappable($scope.dragged_work)
+    $scope.$digest()
 
   $scope.on_work_drag_end = (event) ->
-    console.log "drag end"
+    console.log event
     $scope.unhighlight_all_swappable()
+    $scope.reset_drag_position(event.target)
+    $scope.$digest()
 
   $scope.on_drop = (event) ->
+    console.log event
     work = $scope.get_dropped_work(event)
     $scope.dropped_work = $scope.get_dropped_work(event)
     $scope.swap($scope.dragged_work, $scope.dropped_work)
+
 
   $scope.swap = (work1, work2) ->
     rehearsal1 = null
@@ -50,13 +56,16 @@
       for work in rehearsal.works
         if work.id in $scope.all_swappable(orig_work)
           work.swappable = true
-    $scope.$digest()
 
   $scope.unhighlight_all_swappable = () ->
     for rehearsal in $scope.schedule.rehearsals
       for work in rehearsal.works
         work.swappable = false
-    $scope.$digest()
+
+  $scope.reset_drag_position = (target) ->
+    target.style.removeProperty('top')
+    target.style.removeProperty('left')
+
 
   $scope.get_dragged_work = (event) ->
     id = parseInt(event.target.id.match(/\d+/))

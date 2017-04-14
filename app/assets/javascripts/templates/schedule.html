@@ -5,11 +5,11 @@
                 <h1>{{ date_format(item.start_time) }}</h1>
                 <div class="sch-work" ng-repeat="work in item.works" data-drag="true" data-drop="true"
                      ng-class="{swappable: work.swappable}"
-                     jqyoui-draggable="{onStart: 'on_work_drag', onStop: 'on_work_drag_end'}"
+                     jqyoui-draggable="{onStart: 'on_work_drag', onStop: 'on_work_drag_end', animate: true}"
                      jqyoui-droppable="{onDrop: 'on_drop'}"
                      data-jqyoui-options="{revert: 'invalid'}"
                      id="work_{{work.id}}">
-                    <h2>{{work.name}} {{work.swappable}}</h2>
+                    <h2>{{work.name}}</h2>
                     <p>{{work.work_type}} • {{work.duration}}m • {{work.break_duration}}m break</p>
                 </div>
         </div>
