@@ -49,7 +49,7 @@
         <div ng-repeat="w in works">
             <div class="work">
                 <div class="delete glyphicon glyphicon-remove" ng-click="works_delete(w.id)"></div>
-                <h4>{{ w.name }} {{ w.type }}</h4>
+                <h4>{{ w.name }} ({{ w.work_type }})</h4>
                 <h5>{{ w.duration }} minutes</h5>
                 <ul>
                     <li ng-repeat="c in w.called">

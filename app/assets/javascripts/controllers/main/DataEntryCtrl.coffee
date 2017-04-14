@@ -20,8 +20,10 @@
     if c.frequency == 'W'
       day = days[conflict_start.getDay()]
       return "Every " + day + ": " + human_time(conflict_start) + " - " + human_time(conflict_end)
-    else
+    else if human_date(conflict_start) == human_date(conflict_end)
       return human_date(conflict_start) + ": " + human_time(conflict_start) + " - " + human_time(conflict_end)
+    else 
+      return human_date(conflict_start) + ": " + human_time(conflict_start) + " - " + human_date(conflict_end) + ": " + human_time(conflict_end)
 
   $scope.generate_schedule = () ->
     window.location.href = '/#/schedule'
