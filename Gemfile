@@ -50,7 +50,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   # Call `binding.pry` anywhere to stop execution and get a debugger console
   gem 'pry'
-  gem 'byebug', platform: :mri
+  gem 'byebug'
 end
 
 group :development do
