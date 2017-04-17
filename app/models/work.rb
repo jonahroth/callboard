@@ -9,8 +9,16 @@ class Work < ApplicationRecord
   accepts_nested_attributes_for :person_works, allow_destroy: true
   accepts_nested_attributes_for :dependencies, allow_destroy: true
 
+  validate :duration_not_zero
+  validates :name, :duration, presence: true
+
   def called
     people
+  end
+
+  def duration_not_zero
+    errors.add(:duration, "Duration must be at least 1 minute") if 
+      duration < 1
   end
 
   # Whether this piece of work can be scheduled at a given start time
