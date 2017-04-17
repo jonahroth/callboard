@@ -69,6 +69,8 @@ class SchedulesController < ApplicationController
   end
 
   def schedule_params
-    params.fetch(:schedule, {})
+    params.require(:schedule).permit(:id, :production_id, rehearsals: [:title, :start_time, :production_id, :schedule_id,
+                                                                  works: [:name, :work_type, :duration, :break_duration,
+                                                                          :rehearsal_id, :production_id, :swappable]])
   end
 end

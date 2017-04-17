@@ -20,8 +20,10 @@
     if c.frequency == 'W'
       day = days[conflict_start.getDay()]
       return "Every " + day + ": " + human_time(conflict_start) + " - " + human_time(conflict_end)
-    else
+    else if human_date(conflict_start) == human_date(conflict_end)
       return human_date(conflict_start) + ": " + human_time(conflict_start) + " - " + human_time(conflict_end)
+    else 
+      return human_date(conflict_start) + ": " + human_time(conflict_start) + " - " + human_date(conflict_end) + ": " + human_time(conflict_end)
 
   $scope.generate_schedule = () ->
     window.location.href = '/#/schedule'
@@ -190,6 +192,6 @@
       data: {work: {id: work_id, person_works_attributes: [{id: pwork_id, _destroy: true}]}}
     }).then((() ->
       work = $scope.works.filter((o) -> o.id == work_id)[0]
-      work.called = work.called.filter((o) -> o.id != pwork_id)
+      work.called = work.called.filter((o) -> o.call_id != pwork_id)
       $scope.touch_last_saved()
     ), $scope.person_works_failure)

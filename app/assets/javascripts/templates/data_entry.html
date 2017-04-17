@@ -1,5 +1,6 @@
 <div ng-controller="DataEntryCtrl" class="app row">
     <div class="col-md-6" id="actors">
+        <h2>Actors/Conflicts</h2>
         <div ng-repeat="p in people">
             <div class="actor">
                 <div class="delete glyphicon glyphicon-remove" ng-click="people_delete(p.id)"
@@ -31,6 +32,7 @@
         </div>
         <div class="actor">
             <form name="personForm" ng-submit="people_submit()">
+            	<h4>Name</h4>
                 <div class="form-group">
                     <label>First</label>
                     <input type="text" name="first" class="form-control" ng-model="people_message.person.first">
@@ -44,20 +46,21 @@
         </div>
     </div>
     <div class="col-md-6" id="works">
+        <h2>Rehearsals</h2>
         <div ng-repeat="w in works">
             <div class="work">
                 <div class="delete glyphicon glyphicon-remove" ng-click="works_delete(w.id)"></div>
-                <h4>{{ w.name }} {{ w.type }}</h4>
+                <h4>{{ w.name }} ({{ w.work_type }})</h4>
                 <h5>{{ w.duration }} minutes</h5>
                 <ul>
                     <li ng-repeat="c in w.called">
-                        <div class="delete-inline glyphicon glyphicon-remove" ng-click="person_works_delete(w.id, c.id)"></div>
+                        <div class="delete-inline glyphicon glyphicon-remove" ng-click="person_works_delete(w.id, c.call_id)"></div>
                         {{ c.first }} {{ c.last }}
                     </li>
                     <li>
                         <form name="personWorkForm_{{w.id}}">
                             <select ng-model="person_works_messages[w.id]" ng-change="person_works_submit({{w.id}})">
-                                <option disabled selected value>choose a person</option>
+                                <option disabled selected value>add a person</option>
                                 <option ng-repeat="person in people" value="{{person.id}}">
                                     {{ person.first }} {{ person.last }}
                                 </option>
@@ -78,7 +81,7 @@
                     <input type="text" name="work_type" class="form-control" ng-model="works_message.work.work_type">
                 </div>
                 <div class="form-group">
-                    <label>Duration</label>
+                    <label> Duration (Minutes)</label>
                     <input type="number" name="duration" class="form-control" ng-model="works_message.work.duration">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

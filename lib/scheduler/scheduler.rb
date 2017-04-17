@@ -11,6 +11,7 @@ module Scheduler
     new_rehearsal = Rehearsal.create!(start_time: start, schedule: schedule)
     production.works.each_with_index do |c, i|
       c.break_duration = 5
+      c.sequence_id = i + 1
       new_rehearsal.works << c
       if new_rehearsal.works.length >= cpr
         new_rehearsal.works[-1].break_duration = 0
