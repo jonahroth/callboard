@@ -190,6 +190,6 @@
       data: {work: {id: work_id, person_works_attributes: [{id: pwork_id, _destroy: true}]}}
     }).then((() ->
       work = $scope.works.filter((o) -> o.id == work_id)[0]
-      work.called = work.called.filter((o) -> o.id != pwork_id)
+      work.called = work.called.filter((o) -> o.call_id != pwork_id)
       $scope.touch_last_saved()
     ), $scope.person_works_failure)
