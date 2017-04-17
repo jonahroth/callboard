@@ -28,6 +28,11 @@
   $scope.generate_schedule = () ->
     window.location.href = '/#/schedule'
 
+  $scope.getWorkType = (wt) ->
+    if wt.nil?
+      return ""
+    else return "(" + wt + ")"
+
   ### PEOPLE AND CONFLICTS ###
   $scope.people_message = {person: {}}
   $scope.people_success = (response) ->

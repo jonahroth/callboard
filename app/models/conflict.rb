@@ -49,7 +49,7 @@ class Conflict < ApplicationRecord
     end
   end
 
-def start_not_past
+  def start_not_past
   	errors.add(:start, "Cannot be in the past") if 
   	  start < Date.today
   end
