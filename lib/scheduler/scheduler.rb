@@ -31,5 +31,6 @@ module Scheduler
     schedule.save
     schedule
   end
+
 end
 
