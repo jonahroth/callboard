@@ -22,7 +22,7 @@
       return "Every " + day + ": " + human_time(conflict_start) + " - " + human_time(conflict_end)
     else if human_date(conflict_start) == human_date(conflict_end)
       return human_date(conflict_start) + ": " + human_time(conflict_start) + " - " + human_time(conflict_end)
-    else 
+    else
       return human_date(conflict_start) + ": " + human_time(conflict_start) + " - " + human_date(conflict_end) + ": " + human_time(conflict_end)
 
   $scope.generate_schedule = () ->
@@ -56,7 +56,6 @@
         $scope.touch_last_saved()
       ), $scope.people_failure)
 
-
   people_load_success_fn = (response) ->
     $scope.people = (response.data)
     $scope.people_names = $scope.people.map (obj) ->
@@ -71,7 +70,13 @@
       person.conflicts.push(response.data.conflicts[response.data.conflicts.length - 1])
       $scope.touch_last_saved()
     $scope.conflicts_failure = (response) ->
-      console.log('request failed')
+      person = $scope.people.filter((o) -> o.id == response.config.data.person.id)[0]
+      for str in response.data['conflicts.base']
+        conflict_id = parseInt(str.match(/Identical Conflict: (\d+)/)[1])
+        dom_conflict = $('#conflict_' + conflict_id)
+        dom_conflict.addClass('flash-green')
+        window.setTimeout((() -> dom_conflict.removeClass('flash-green')), 1000)
+
     dp = (id) ->
       $('#conflictInput_' + id + ' .time').timepicker({
         'showDuration': true,
@@ -153,7 +158,6 @@
         $scope.works = $scope.works.filter((o) -> o.id != id)
         $scope.touch_last_saved()
       ), $scope.people_failure)
-
 
   works_load_success_fn = (response) ->
     $scope.works = (response.data)

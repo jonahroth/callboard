@@ -74,6 +74,34 @@ body, .content, .row {
   border: 5px solid $border;
 }
 
+@keyframes flash-green {
+  0% {
+    background: lightgreen;
+  }
+
+  100% {
+    background: none;
+  }
+}
+
+.flash-green {
+  animation: flash-green 1s;
+}
+
+@keyframes flash-red {
+  0% {
+    background: red;
+  }
+
+  100% {
+    background: none;
+  }
+}
+
+.flash-red {
+  animation: flash-red 1s;
+}
+
 // SCHEDULES
 
 .sch-work {
