@@ -54,7 +54,7 @@
                 <h5>{{ w.duration }} minutes</h5>
                 <ul>
                     <li ng-repeat="c in w.called">
-                        <div class="delete-inline glyphicon glyphicon-remove" ng-click="person_works_delete(w.id, c.id)"></div>
+                        <div class="delete-inline glyphicon glyphicon-remove" ng-click="person_works_delete(w.id, c.call_id)"></div>
                         {{ c.first }} {{ c.last }}
                     </li>
                     <li>
