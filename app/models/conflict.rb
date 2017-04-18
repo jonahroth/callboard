@@ -61,7 +61,7 @@ def start_not_past
 
   def no_repeat
   	Conflict.where(person_id: self.person_id).each do |c|
-  		errors.add("Identical Conflict") if 
+  		errors.add(:base, "Identical Conflict: #{c.id}") if
   			c.start == self.start && c.end == self.end && c.frequency == self.frequency
   	end
   end

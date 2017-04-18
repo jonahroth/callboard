@@ -7,7 +7,7 @@
                      ng-hide="p.id == current_user.person_id"></div>
                 <div class="name">{{ p.first }} {{ p.last }}</div>
                 <ul>
-                    <li ng-repeat="c in p.conflicts" class="conflict">
+                    <li ng-repeat="c in p.conflicts" class="conflict" id="conflict_{{c.id}}">
                         <div class="delete-inline glyphicon glyphicon-remove"
                              ng-click="conflicts_delete(p.id, c.id)"></div>
                         {{ conflict_to_string(c) }}
