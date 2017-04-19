@@ -1,4 +1,4 @@
-@Prospero.controller 'ScheduleCtrl', ($scope, $http) ->
+@Prospero.controller 'ScheduleCtrl', ['$scope', '$http', ($scope, $http) ->
   $scope.loading = false
   schedule_success = (response) ->
     $scope.schedule = response.data
@@ -108,3 +108,4 @@
 
   $http({method: 'GET', url: '/generate.json'})
     .then(schedule_success)
+]
