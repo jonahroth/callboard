@@ -14,6 +14,9 @@
   human_date = (c) -> c.toDateString().substring(0, 10)
   human_time = (c) -> c.toTimeString().substring(0, 5)
 
+  $scope.get_work = (id) ->
+    $scope.works.filter((o) -> o.id == id)[0]
+
   $scope.conflict_to_string = (c) ->
     conflict_start = new Date(c.start)
     conflict_end = new Date(c.end)
@@ -40,8 +43,7 @@
     $http({
       method: 'POST',
       url: '/people.json',
-      data: $scope.people_message,
-      format: 'application/json'
+      data: $scope.people_message
     }).then($scope.people_success, $scope.people_failure)
   $scope.people_delete = (id) ->
     delete_person = confirm('Are you sure you want to delete this person?')
@@ -145,8 +147,7 @@
     $http({
       method: 'POST',
       url: '/works.json',
-      data: $scope.works_message,
-      format: 'application/json'
+      data: $scope.works_message
     }).then($scope.works_success, $scope.works_failure)
   $scope.works_delete = (id) ->
     delete_work = confirm('Are you sure you want to delete this work?')
@@ -183,8 +184,7 @@
       $http({
         method: 'PUT',
         url: '/works/' + id + '.json',
-        data: {work: {id: id, person_works_attributes: [{person_id: person_id}]}},
-        format: 'application/json'
+        data: {work: {id: id, person_works_attributes: [{person_id: person_id}]}}
       }).then($scope.person_works_success, $scope.person_works_failure)
       $scope.person_works_messages[id] = null
     else
@@ -199,3 +199,38 @@
       work.called = work.called.filter((o) -> o.call_id != pwork_id)
       $scope.touch_last_saved()
     ), $scope.person_works_failure)
+
+
+  $scope.dependency_messages = {}
+  $scope.dependency_success = (response) ->
+    work = $scope.get_work(response.data.id)
+    work.dependencies.push(response.data.dependencies[response.data.dependencies.length - 1])
+  $scope.dependency_failure = (response) ->
+    console.log(response)
+  should_add_dependency = (work_id, dependency_id) ->
+    return false unless work_id && dependency_id
+    return false if work_id == dependency_id
+    current_work = $scope.get_work(work_id)
+    dependent_work = $scope.get_work(dependency_id)
+    return false if dependent_work.dependencies.map((o) -> o.dependency_id).includes(work_id)
+    return true
+
+  $scope.dependency_submit = (id) ->
+    dependency_id = parseInt($scope.dependency_messages[id])
+    if should_add_dependency(id, dependency_id)
+      $http({
+        method: 'PUT',
+        url: '/works/' + id + '.json',
+        data: {work: {id: id, dependencies_attributes: [{dependency_id: dependency_id}]}}
+      }).then($scope.dependency_success, $scope.dependency_failure)
+      $scope.dependency_messages[id] = null
+
+  $scope.dependency_delete = (work_id, wd_id) ->
+    $http({
+      method: 'PUT',
+      url: '/works/' + work_id + '.json',
+      data: {work: {id: work_id, dependencies_attributes: [{id: wd_id, _destroy: true}]}}
+    }).then((() ->
+      work = $scope.get_work(work_id)
+      work.dependencies = work.dependencies.filter((o) -> o.id != wd_id)
+    ), $scope.dependency_failure)

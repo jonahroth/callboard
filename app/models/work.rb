@@ -1,16 +1,13 @@
 class Work < ApplicationRecord
   has_many :person_works
   has_many :people, through: :person_works
+  has_many :dependencies, class_name: 'WorkDependency', foreign_key: :dependent_id
+  has_many :dependents, class_name: 'WorkDependency', foreign_key: :dependency_id
   belongs_to :rehearsal, optional: true
   belongs_to :production
 
   accepts_nested_attributes_for :person_works, allow_destroy: true
-
-  # validate do
-  #   if rehearsal && rehearsal.production != production
-  #     errors.add(:rehearsal, 'Rehearsal must be part of the production')
-  #   end
-  # end
+  accepts_nested_attributes_for :dependencies, allow_destroy: true
 
   def called
     people
@@ -29,7 +26,7 @@ class Work < ApplicationRecord
     conflicts = Set.new
     work.called.each do |p|
       p.conflicts.each do |c|
-        if not c.fits?(start_datetime, end_datetime)
+        unless c.fits?(start_datetime, end_datetime)
           conflicts << c
         end
       end

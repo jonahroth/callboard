@@ -68,6 +68,23 @@
                         </form>
                     </li>
                 </ul>
+                <hr>
+                <ul>
+                    <li ng-repeat="d in w.dependencies">
+                        <div class="delete-inline glyphicon glyphicon-remove" ng-click="dependency_delete(w.id, d.id)"></div>
+                        {{ get_work(d.dependency_id).name }}
+                    </li>
+                    <li>
+                        <form name="dependencyForm_{{w.id}}">
+                            <select ng-model="dependency_messages[w.id]" ng-change="dependency_submit({{w.id}})">
+                                <option disabled selected value>add a dependency</option>
+                                <option ng-repeat="work in works" value="{{work.id}}">
+                                    {{work.name}} ({{work.work_type}})
+                                </option>
+                            </select>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="work">

@@ -6,3 +6,8 @@ json.called work.person_works do |pw|
   json.id pw.person.id
   json.call_id pw.id
 end
+json.dependencies work.dependencies do |d|
+  json.id d.id
+  json.dependent_id d.dependent_id
+  json.dependency_id d.dependency_id
+end
