@@ -9,23 +9,9 @@ class Work < ApplicationRecord
   accepts_nested_attributes_for :person_works, allow_destroy: true
   accepts_nested_attributes_for :dependencies
 
-  # validate do
-  #   if rehearsal && rehearsal.production != production
-  #     errors.add(:rehearsal, 'Rehearsal must be part of the production')
-  #   end
-  # end
-
   def called
     people
   end
-
-  # def dependencies
-  #   WorkDependency.where(dependent_id: self.id)
-  # end
-
-  # def dependents
-  #   WorkDependency.where(dependency_id: self.id)
-  # end
 
   # Whether this piece of work can be scheduled at a given start time
   # without conflicts.
@@ -40,7 +26,7 @@ class Work < ApplicationRecord
     conflicts = Set.new
     work.called.each do |p|
       p.conflicts.each do |c|
-        if not c.fits?(start_datetime, end_datetime)
+        unless c.fits?(start_datetime, end_datetime)
           conflicts << c
         end
       end
