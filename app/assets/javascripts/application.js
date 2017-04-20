@@ -17,7 +17,6 @@
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require angular
-//= require autocomplete
 //= require angular-route
 //= require angular-rails-templates
 //= require Datepair

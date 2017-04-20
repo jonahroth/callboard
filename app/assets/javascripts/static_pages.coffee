@@ -1,10 +1,7 @@
 #= require_self
-#= require autocomplete
-#= require moment
-#= require xeditable
 #= require_tree ./controllers/main
 
-@Prospero = angular.module("prospero", ["ngRoute", "templates", "autocomplete", "ngDragDrop"])
+@Prospero = angular.module("prospero", ["ngRoute", "templates", "ngDragDrop"])
 
 @Prospero.config(['$routeProvider', ($routeProvider) ->
   $routeProvider.when('/schedule', {templateUrl: 'schedule.html', controller: 'ScheduleCtrl'})
@@ -20,7 +17,7 @@
 ])
 
 
-# http://stackoverflow.com/questions/22486264/angular-and-datepair-wont-play-nice
+# adapted from http://stackoverflow.com/questions/22486264/angular-and-datepair-wont-play-nice
 @Prospero.directive('timePicker', ['$timeout', ($timeout) ->
   return {
     restrict: 'AC',

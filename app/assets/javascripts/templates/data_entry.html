@@ -71,6 +71,7 @@
                 <hr>
                 <ul>
                     <li ng-repeat="d in w.dependencies">
+                        <div class="delete-inline glyphicon glyphicon-remove" ng-click="dependency_delete(w.id, d.id)"></div>
                         {{ get_work(d.dependency_id).name }}
                     </li>
                     <li>

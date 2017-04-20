@@ -7,7 +7,7 @@ class Work < ApplicationRecord
   belongs_to :production
 
   accepts_nested_attributes_for :person_works, allow_destroy: true
-  accepts_nested_attributes_for :dependencies
+  accepts_nested_attributes_for :dependencies, allow_destroy: true
 
   def called
     people

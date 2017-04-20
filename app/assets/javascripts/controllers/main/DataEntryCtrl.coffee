@@ -43,8 +43,7 @@
     $http({
       method: 'POST',
       url: '/people.json',
-      data: $scope.people_message,
-      format: 'application/json'
+      data: $scope.people_message
     }).then($scope.people_success, $scope.people_failure)
   $scope.people_delete = (id) ->
     delete_person = confirm('Are you sure you want to delete this person?')
@@ -148,8 +147,7 @@
     $http({
       method: 'POST',
       url: '/works.json',
-      data: $scope.works_message,
-      format: 'application/json'
+      data: $scope.works_message
     }).then($scope.works_success, $scope.works_failure)
   $scope.works_delete = (id) ->
     delete_work = confirm('Are you sure you want to delete this work?')
@@ -186,8 +184,7 @@
       $http({
         method: 'PUT',
         url: '/works/' + id + '.json',
-        data: {work: {id: id, person_works_attributes: [{person_id: person_id}]}},
-        format: 'application/json'
+        data: {work: {id: id, person_works_attributes: [{person_id: person_id}]}}
       }).then($scope.person_works_success, $scope.person_works_failure)
       $scope.person_works_messages[id] = null
     else
@@ -224,7 +221,16 @@
       $http({
         method: 'PUT',
         url: '/works/' + id + '.json',
-        data: {work: {id: id, dependencies_attributes: [{dependency_id: dependency_id}]}},
-        format: 'application/json'
+        data: {work: {id: id, dependencies_attributes: [{dependency_id: dependency_id}]}}
       }).then($scope.dependency_success, $scope.dependency_failure)
       $scope.dependency_messages[id] = null
+
+  $scope.dependency_delete = (work_id, wd_id) ->
+    $http({
+      method: 'PUT',
+      url: '/works/' + work_id + '.json',
+      data: {work: {id: work_id, dependencies_attributes: [{id: wd_id, _destroy: true}]}}
+    }).then((() ->
+      work = $scope.get_work(work_id)
+      work.dependencies = work.dependencies.filter((o) -> o.id != wd_id)
+    ), $scope.dependency_failure)
