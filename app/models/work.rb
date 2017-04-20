@@ -16,6 +16,14 @@ class Work < ApplicationRecord
     people
   end
 
+  def dependencies
+    WorkDependency.where(dependent_id: self.id)
+  end
+
+  def dependents
+    WorkDependency.where(dependency_id: self.id)
+  end
+
   # Whether this piece of work can be scheduled at a given start time
   # without conflicts.
   # TODO Allow for expressing priority, maybe by returning a number instead

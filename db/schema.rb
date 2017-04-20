@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170414151659) do
+ActiveRecord::Schema.define(version: 20170419154852) do
 
   create_table "character_scenes", force: :cascade do |t|
     t.integer  "character_id"
@@ -179,6 +179,15 @@ ActiveRecord::Schema.define(version: 20170414151659) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["person_id"], name: "index_users_on_person_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "work_dependencies", force: :cascade do |t|
+    t.integer  "dependent_id"
+    t.integer  "dependency_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["dependency_id"], name: "index_work_dependencies_on_dependency_id"
+    t.index ["dependent_id"], name: "index_work_dependencies_on_dependent_id"
   end
 
   create_table "works", force: :cascade do |t|
