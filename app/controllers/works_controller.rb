@@ -57,6 +57,7 @@ class WorksController < ApplicationController
     def work_params
       params.require(:work).permit(:id, :name, :production_id, :work_type, :duration, :break_duration,
                                    :rehearsal_id, :sequence_id,
-                                   :person_works_attributes => [:id, :person_id, :work_id, :_destroy])
+                                   :person_works_attributes => [:id, :person_id, :work_id, :_destroy],
+                                   :dependencies_attributes => [:id, :dependent_id, :dependency_id, :_destroy])
     end
 end

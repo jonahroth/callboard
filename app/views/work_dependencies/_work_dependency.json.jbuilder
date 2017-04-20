@@ -1,0 +1,1 @@
+json.extract! work_dependency :id, :dependent_id, :dependency_id

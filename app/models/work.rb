@@ -1,10 +1,13 @@
 class Work < ApplicationRecord
   has_many :person_works
   has_many :people, through: :person_works
+  has_many :dependencies, class_name: 'WorkDependency', foreign_key: :dependent_id
+  has_many :dependents, class_name: 'WorkDependency', foreign_key: :dependency_id
   belongs_to :rehearsal, optional: true
   belongs_to :production
 
   accepts_nested_attributes_for :person_works, allow_destroy: true
+  accepts_nested_attributes_for :dependencies
 
   # validate do
   #   if rehearsal && rehearsal.production != production
@@ -16,13 +19,13 @@ class Work < ApplicationRecord
     people
   end
 
-  def dependencies
-    WorkDependency.where(dependent_id: self.id)
-  end
+  # def dependencies
+  #   WorkDependency.where(dependent_id: self.id)
+  # end
 
-  def dependents
-    WorkDependency.where(dependency_id: self.id)
-  end
+  # def dependents
+  #   WorkDependency.where(dependency_id: self.id)
+  # end
 
   # Whether this piece of work can be scheduled at a given start time
   # without conflicts.

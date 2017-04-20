@@ -14,6 +14,9 @@
   human_date = (c) -> c.toDateString().substring(0, 10)
   human_time = (c) -> c.toTimeString().substring(0, 5)
 
+  $scope.get_work = (id) ->
+    $scope.works.filter((o) -> o.id == id)[0]
+
   $scope.conflict_to_string = (c) ->
     conflict_start = new Date(c.start)
     conflict_end = new Date(c.end)
@@ -199,3 +202,29 @@
       work.called = work.called.filter((o) -> o.call_id != pwork_id)
       $scope.touch_last_saved()
     ), $scope.person_works_failure)
+
+
+  $scope.dependency_messages = {}
+  $scope.dependency_success = (response) ->
+    work = $scope.get_work(response.data.id)
+    work.dependencies.push(response.data.dependencies[response.data.dependencies.length - 1])
+  $scope.dependency_failure = (response) ->
+    console.log(response)
+  should_add_dependency = (work_id, dependency_id) ->
+    return false unless work_id && dependency_id
+    return false if work_id == dependency_id
+    current_work = $scope.get_work(work_id)
+    dependent_work = $scope.get_work(dependency_id)
+    return false if dependent_work.dependencies.map((o) -> o.dependency_id).includes(work_id)
+    return true
+
+  $scope.dependency_submit = (id) ->
+    dependency_id = parseInt($scope.dependency_messages[id])
+    if should_add_dependency(id, dependency_id)
+      $http({
+        method: 'PUT',
+        url: '/works/' + id + '.json',
+        data: {work: {id: id, dependencies_attributes: [{dependency_id: dependency_id}]}},
+        format: 'application/json'
+      }).then($scope.dependency_success, $scope.dependency_failure)
+      $scope.dependency_messages[id] = null
