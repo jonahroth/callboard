@@ -1,4 +1,4 @@
-@Prospero.controller 'DataEntryCtrl', ($scope, $http) ->
+@Prospero.controller 'DataEntryCtrl', ['$scope', '$http', ($scope, $http) ->
   $http({
     method: 'GET',
     url: '/current_user'
@@ -234,3 +234,4 @@
       work = $scope.get_work(work_id)
       work.dependencies = work.dependencies.filter((o) -> o.id != wd_id)
     ), $scope.dependency_failure)
+]
