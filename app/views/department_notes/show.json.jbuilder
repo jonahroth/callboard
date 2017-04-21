@@ -1,1 +1,0 @@
-json.partial! "department_notes/department_note", department_note: @department_note

@@ -1,1 +1,0 @@
-json.array! @crew_roles, partial: 'crew_roles/crew_role', as: :crew_role

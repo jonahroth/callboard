@@ -1,1 +1,0 @@
-json.partial! "crew_calls/crew_call", crew_call: @crew_call
