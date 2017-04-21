@@ -1,22 +1,26 @@
 <div ng-controller="ScheduleCtrl" class="app row">
-    <div class="row" id="loading" ng-show="loading">
-        <div class="loading-box">
-            <span class="glyphicon glyphicon-refresh spinner"></span> Loading...
+    <div class="container">
+        <div class="row" id="loading" ng-show="loading">
+            <div class="loading-box">
+                <span class="glyphicon glyphicon-refresh spinner"></span> Loading...
+            </div>
         </div>
-    </div>
-    <div class="row active" ng-hide="loading">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <div class="sch-rehearsal" ng-repeat="item in schedule.rehearsals">
-                <p>{{ date_format(item.start_time) }}</p>
-                <div class="sch-work" ng-repeat="work in item.works" data-drag="true" data-drop="true"
-                     ng-class="{swappable: work.swappable}"
-                     jqyoui-draggable="{onStart: 'on_work_drag', onStop: 'on_work_drag_end', animate: true}"
-                     jqyoui-droppable="{onDrop: 'on_drop'}"
-                     data-jqyoui-options="{revert: 'invalid'}"
-                     id="work_{{work.id}}">
-                    <p>{{work.name}}</p>
-                    <p>{{work.work_type}} • {{work.duration}}m • {{work.break_duration}}m break</p>
+        <div class="row active" ng-hide="loading">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h2>Rehearsal Schedule</h2>
+                <p class="instructions">(Click and drag rehearsal items to swap them)</p>
+                <div class="sch-rehearsal" ng-repeat="item in schedule.rehearsals">
+                    <p>{{ date_format(item.start_time) }}</p>
+                    <div class="sch-work" ng-repeat="work in item.works" data-drag="true" data-drop="true"
+                         ng-class="{swappable: work.swappable}"
+                         jqyoui-draggable="{onStart: 'on_work_drag', onStop: 'on_work_drag_end', animate: true}"
+                         jqyoui-droppable="{onDrop: 'on_drop'}"
+                         data-jqyoui-options="{revert: 'invalid'}"
+                         id="work_{{work.id}}">
+                        <p>{{work.name}}</p>
+                        <p>{{work.work_type}} • {{work.duration}}m • {{work.break_duration}}m break</p>
+                    </div>
                 </div>
             </div>
         </div>

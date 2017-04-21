@@ -39,6 +39,7 @@
   $scope.people_success = (response) ->
     $scope.people.push(response.data)
     $scope.people_message = {person: {}}
+    $('#person-form-start').focus()
     $scope.touch_last_saved()
   $scope.people_failure = (response) ->
     console.log('request failed')
@@ -152,6 +153,7 @@
     $scope.works.push(response.data)
     $scope.works_message = {work: {}}
     $scope.touch_last_saved()
+    $('#work-form-start').focus()
   $scope.works_failure = (response) ->
     console.log('request failed')
   $scope.works_submit = () ->

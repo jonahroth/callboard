@@ -1,142 +1,146 @@
 <div ng-controller="DataEntryCtrl" class="app">
-    <div class="row" id="loading" ng-show="loading">
-        <div class="loading-box">
-            <span class="glyphicon glyphicon-refresh spinner"></span> Loading...
+    <div class="container">
+        <div class="row" id="loading" ng-show="loading">
+            <div class="loading-box">
+                <span class="glyphicon glyphicon-refresh spinner"></span> Loading...
+            </div>
         </div>
-    </div>
-    <div class="row active" ng-hide="loading">
-        <div class="col-sm-6 scrollable" id="actors">
-            <h2>Actors/Conflicts</h2>
-            <div ng-repeat="p in people">
+        <div class="row active" ng-hide="loading">
+            <div class="col-sm-6 scrollable" id="actors">
+                <h2>People</h2>
+                <div ng-repeat="p in people">
+                    <div class="actor">
+                        <div class="delete glyphicon glyphicon-remove" ng-click="people_delete(p.id)"
+                             ng-hide="p.id == current_user.person_id"></div>
+                        <div class="name">{{ p.first }} {{ p.last }}</div>
+                        <ul>
+                            <li ng-repeat="c in p.conflicts" class="conflict" id="conflict_{{c.id}}">
+                                <div class="delete-inline glyphicon glyphicon-remove"
+                                     ng-click="conflicts_delete(p.id, c.id)"></div>
+                                {{ conflict_to_string(c) }}
+                            </li>
+                            <li>
+                                <form name="conflictForm_{{p.id}}" ng-submit="conflicts_submit(p.id)">
+                                    <div date-pair id="conflictInput_{{p.id}}">
+                                        <input date-picker class="date start"
+                                               ng-model="conflicts_messages[p.id].start_date"/>
+                                        <input time-picker class="time start"
+                                               ng-model="conflicts_messages[p.id].start_time"/>
+                                        to
+                                        <input time-picker class="time end"
+                                               ng-model="conflicts_messages[p.id].end_time"/>
+                                        <input date-picker class="date end"
+                                               ng-model="conflicts_messages[p.id].end_date"/>
+                                    </div>
+                                    <label>Weekly</label>
+                                    <input type="checkbox" ng-model="conflicts_messages[p.id].frequency"
+                                           ng-true-value="'W'" ng-false-value="'O'">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="actor">
-                    <div class="delete glyphicon glyphicon-remove" ng-click="people_delete(p.id)"
-                         ng-hide="p.id == current_user.person_id"></div>
-                    <div class="name">{{ p.first }} {{ p.last }}</div>
-                    <ul>
-                        <li ng-repeat="c in p.conflicts" class="conflict" id="conflict_{{c.id}}">
-                            <div class="delete-inline glyphicon glyphicon-remove"
-                                 ng-click="conflicts_delete(p.id, c.id)"></div>
-                            {{ conflict_to_string(c) }}
-                        </li>
-                        <li>
-                            <form name="conflictForm_{{p.id}}" ng-submit="conflicts_submit(p.id)">
-                                <div date-pair id="conflictInput_{{p.id}}">
-                                    <input date-picker class="date start"
-                                           ng-model="conflicts_messages[p.id].start_date"/>
-                                    <input time-picker class="time start"
-                                           ng-model="conflicts_messages[p.id].start_time"/>
-                                    to
-                                    <input time-picker class="time end" ng-model="conflicts_messages[p.id].end_time"/>
-                                    <input date-picker class="date end" ng-model="conflicts_messages[p.id].end_date"/>
-                                </div>
-                                <label>Weekly</label>
-                                <input type="checkbox" ng-model="conflicts_messages[p.id].frequency"
-                                       ng-true-value="'W'" ng-false-value="'O'">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="actor">
-                <form name="personForm" ng-submit="people_submit()" class="form-inline">
-                    <h4>Name</h4>
-                    <div class="form-group">
-                        <label>First</label>
-                        <input type="text" name="first" class="form-control" ng-model="people_message.person.first">
-                    </div>
-                    <div class="form-group">
-                        <label>Last</label>
-                        <input type="text" name="last" class="form-control" ng-model="people_message.person.last">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
-        <div class="col-sm-6 scrollable" id="works">
-            <h2>Rehearsals</h2>
-            <div ng-repeat="w in works">
-                <div class="work">
-                    <div class="delete glyphicon glyphicon-remove" ng-click="works_delete(w.id)"></div>
-                    <h4>{{ w.name }} ({{ w.work_type }})</h4>
-                    <h5>{{ w.duration }} minutes</h5>
-                    <div class="work-forms">
-                        <div class="work-calls">
-                            <ul>
-                                <li ng-repeat="c in w.called">
-                                    <div class="delete-inline glyphicon glyphicon-remove"
-                                         ng-click="person_works_delete(w.id, c.call_id)"></div>
-                                    {{ c.first }} {{ c.last }}
-                                </li>
-                                <li>
-                                    <form name="personWorkForm_{{w.id}}">
-                                        <select ng-model="person_works_messages[w.id]"
-                                                ng-change="person_works_submit({{w.id}})" class="fit-width">
-                                            <option disabled selected value>add a person</option>
-                                            <option ng-repeat="person in people" value="{{person.id}}">
-                                                {{ person.first }} {{ person.last }}
-                                            </option>
-                                        </select>
-                                    </form>
-                                </li>
-                            </ul>
+                    <form name="personForm" ng-submit="people_submit()" class="form-inline">
+                        <h4>Name</h4>
+                        <div class="form-group">
+                            <label>First</label>
+                            <input type="text" name="first" class="form-control" ng-model="people_message.person.first" id="person-form-start">
                         </div>
-                        <div class="work-deps">
-                            <ul>
-                                <li ng-repeat="d in w.dependencies">
-                                    <div class="delete-inline glyphicon glyphicon-remove"
-                                         ng-click="dependency_delete(w.id, d.id)"></div>
-                                    {{ get_work(d.dependency_id).name }}
-                                </li>
-                                <li>
-                                    <form name="dependencyForm_{{w.id}}">
-                                        <select ng-model="dependency_messages[w.id]"
-                                                ng-change="dependency_submit({{w.id}})" class="fit-width">
-                                            <option disabled selected value>add a dependency</option>
-                                            <option ng-repeat="work in works" value="{{work.id}}">
-                                                {{work.name}} ({{work.work_type}})
-                                            </option>
-                                        </select>
-                                    </form>
-                                </li>
-                            </ul>
+                        <div class="form-group">
+                            <label>Last</label>
+                            <input type="text" name="last" class="form-control" ng-model="people_message.person.last">
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="work">
-                <form name="workForm" ng-submit="works_submit()" class="form-inline">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" name="name" class="form-control" ng-model="works_message.work.name">
-                    </div>
-                    <div class="form-group">
-                        <label>Type</label>
-                        <input type="text" name="work_type" class="form-control"
-                               ng-model="works_message.work.work_type">
-                    </div>
-                    <div class="form-group">
-                        <label> Duration (Minutes)</label>
-                        <input type="number" name="duration" class="form-control"
-                               ng-model="works_message.work.duration">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-
-            </div>
-        </div>
-        <div class="navbar-default footer">
-            <div class="container-fullwidth">
-                <div class="nav navbar-nav navbar-left">
-                    <div class="saved-text">
-                        Last saved: {{ last_saved() }}
-                    </div>
-                </div>
-                <div class="nav navbar-nav navbar-right action-button">
-                    <form action="/#/schedule">
-                        <input type="submit" value="Generate" ng-click="generate_schedule()" class="btn btn-generate">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
+            </div>
+            <div class="col-sm-6 scrollable" id="works">
+                <h2>Rehearsals</h2>
+                <div ng-repeat="w in works">
+                    <div class="work">
+                        <div class="delete glyphicon glyphicon-remove" ng-click="works_delete(w.id)"></div>
+                        <h4>{{ w.name }} ({{ w.work_type }})</h4>
+                        <h5>{{ w.duration }} minutes</h5>
+                        <div class="work-forms">
+                            <div class="work-calls">
+                                <ul>
+                                    <li ng-repeat="c in w.called">
+                                        <div class="delete-inline glyphicon glyphicon-remove"
+                                             ng-click="person_works_delete(w.id, c.call_id)"></div>
+                                        {{ c.first }} {{ c.last }}
+                                    </li>
+                                    <li>
+                                        <form name="personWorkForm_{{w.id}}">
+                                            <select ng-model="person_works_messages[w.id]"
+                                                    ng-change="person_works_submit({{w.id}})" class="fit-width">
+                                                <option disabled selected value>add a person</option>
+                                                <option ng-repeat="person in people" value="{{person.id}}">
+                                                    {{ person.first }} {{ person.last }}
+                                                </option>
+                                            </select>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="work-deps">
+                                <ul>
+                                    <li ng-repeat="d in w.dependencies">
+                                        <div class="delete-inline glyphicon glyphicon-remove"
+                                             ng-click="dependency_delete(w.id, d.id)"></div>
+                                        {{ get_work(d.dependency_id).name }}
+                                    </li>
+                                    <li>
+                                        <form name="dependencyForm_{{w.id}}">
+                                            <select ng-model="dependency_messages[w.id]"
+                                                    ng-change="dependency_submit({{w.id}})" class="fit-width">
+                                                <option disabled selected value>add a dependency</option>
+                                                <option ng-repeat="work in works" value="{{work.id}}">
+                                                    {{work.name}} ({{work.work_type}})
+                                                </option>
+                                            </select>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="work">
+                    <form name="workForm" ng-submit="works_submit()" class="form-inline">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control short" id="work-form-start" ng-model="works_message.work.name">
+                        </div>
+                        <div class="form-group">
+                            <label>Type</label>
+                            <input type="text" name="work_type" class="form-control short"
+                                   ng-model="works_message.work.work_type">
+                        </div>
+                        <div class="form-group">
+                            <label>Minutes</label>
+                            <input type="number" name="duration" class="form-control short"
+                                   ng-model="works_message.work.duration">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-default footer">
+        <div class="container-fullwidth">
+            <div class="nav navbar-nav navbar-left">
+                <div class="saved-text">
+                    Last saved: {{ last_saved() }}
+                </div>
+            </div>
+            <div class="nav navbar-nav navbar-right action-button">
+                <form action="/#/schedule">
+                    <input type="submit" value="Generate" ng-click="generate_schedule()" class="btn btn-generate">
+                </form>
             </div>
         </div>
     </div>
