@@ -16,12 +16,16 @@ html, body, .content, .container, .ng, .app, .row {
   height: 100%
 }
 
-h2 {
-  padding: 6pt;
+html {
+  overflow: hidden;
 }
 
-.container {
-  //padding-top: 24pt;
+body {
+  overflow: auto;
+}
+
+h2 {
+  padding: 6pt;
 }
 
 body {
@@ -55,6 +59,7 @@ body, .container, .content {
   .saved-text {
     font-variant-caps: petite-caps;
     padding-left: 5%;
+    width: 200px;
   }
 
   .action-button {
@@ -72,7 +77,7 @@ body, .container, .content {
 
 #actors, #works {
   width: 50%;
-  height: 90%;
+  height: 85%;
   overflow: auto;
   position: absolute;
 }
@@ -210,5 +215,5 @@ h2 {
 }
 
 .swappable {
-  background-color: green;
+  background-color: lightgreen;
 }

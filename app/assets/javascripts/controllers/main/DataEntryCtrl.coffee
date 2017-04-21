@@ -11,7 +11,8 @@
 
   $scope.last_save_time = new Date()
   $scope.touch_last_saved = () -> $scope.last_save_time = new Date()
-  $scope.last_saved = () -> $scope.last_save_time.toUTCString()
+  $scope.last_saved = () ->
+    str = $scope.last_save_time.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', second: '2-digit'})
 
   days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   human_date = (c) -> c.toDateString().substring(0, 10)
