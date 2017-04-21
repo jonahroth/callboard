@@ -37,7 +37,7 @@
           ), 0)
       )
       element.timepicker({
-        timeFormat: 'H:i',
+        timeFormat: 'h:i A',
         forceRoundTime: true
       })
   }

@@ -1,6 +1,8 @@
 @Prospero.controller 'ScheduleCtrl', ($scope, $http) ->
+  $scope.loading = false
   schedule_success = (response) ->
     $scope.schedule = response.data
+    $scope.loading = false
     console.log($scope.schedule)
 
   $scope.dragged_work = null
