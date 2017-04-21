@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current
+    render json: current_user
+  end
+
   protected
 
   def verified_request?

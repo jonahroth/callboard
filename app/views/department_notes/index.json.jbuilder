@@ -1,1 +1,0 @@
-json.array! @department_notes, partial: 'department_notes/department_note', as: :department_note
