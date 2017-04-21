@@ -5,7 +5,7 @@ class Person < ApplicationRecord
   has_many :characters
   has_many :crew_roles
   has_many :conflicts, dependent: :delete_all
-  has_many :person_works
+  has_many :person_works, dependent: :delete_all
   has_many :works, through: :person_works
 
   accepts_nested_attributes_for :conflicts, allow_destroy: true

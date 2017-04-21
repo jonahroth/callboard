@@ -1,8 +1,8 @@
 class Work < ApplicationRecord
-  has_many :person_works
+  has_many :person_works, dependent: :delete_all
   has_many :people, through: :person_works
-  has_many :dependencies, class_name: 'WorkDependency', foreign_key: :dependent_id
-  has_many :dependents, class_name: 'WorkDependency', foreign_key: :dependency_id
+  has_many :dependencies, class_name: 'WorkDependency', foreign_key: :dependent_id, dependent: :delete_all
+  has_many :dependents, class_name: 'WorkDependency', foreign_key: :dependency_id, dependent: :delete_all
   belongs_to :rehearsal, optional: true
   belongs_to :production
 
