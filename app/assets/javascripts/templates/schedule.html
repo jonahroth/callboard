@@ -1,7 +1,13 @@
 <div ng-controller="ScheduleCtrl" class="app row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-        <div class="sch-rehearsal" ng-repeat="item in schedule.rehearsals">
+    <div class="row" id="loading" ng-show="loading">
+        <div class="loading-box">
+            <span class="glyphicon glyphicon-refresh spinner"></span> Loading...
+        </div>
+    </div>
+    <div class="row active" ng-hide="loading">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="sch-rehearsal" ng-repeat="item in schedule.rehearsals">
                 <p>{{ date_format(item.start_time) }}</p>
                 <div class="sch-work" ng-repeat="work in item.works" data-drag="true" data-drop="true"
                      ng-class="{swappable: work.swappable}"
@@ -12,6 +18,7 @@
                     <p>{{work.name}}</p>
                     <p>{{work.work_type}} • {{work.duration}}m • {{work.break_duration}}m break</p>
                 </div>
+            </div>
         </div>
     </div>
 </div>

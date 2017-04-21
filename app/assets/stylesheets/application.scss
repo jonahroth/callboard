@@ -22,11 +22,15 @@
 @import 'bootstrap';
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .navbar {
   margin-bottom: 0px;
+
+  .navbar-right {
+    margin-right: 12pt;
+  }
 }
 
 .content {
