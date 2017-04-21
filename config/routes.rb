@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   get 'generate' => 'schedules#generate'
 
   resources :rehearsals
-  resources :scenes
   resources :conflicts
   resources :productions
   resources :people
