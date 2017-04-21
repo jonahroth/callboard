@@ -22,5 +22,5 @@
 //= require Datepair
 //= require jquery.datepair.js
 //= require angular-dragdrop
-//= require static_pages
+//= require schedules
 //= require_tree ./templates

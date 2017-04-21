@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
-  resources :person_works
-  resources :works
-  get 'static_pages/index'
-  root 'static_pages#index'
+  root 'schedules#new'
 
-  get 'current_user' => 'static_pages#current'
+  get 'current_user' => 'application#current'
 
   get  'api/mobile/code'    => 'mobile#code'
   post 'api/mobile/cell'    => 'mobile#cell'
@@ -13,14 +10,15 @@ Rails.application.routes.draw do
   # TODO: get rid of this
   get 'generate' => 'schedules#generate'
 
-  resources :notes
-  resources :rehearsal_scenes
   resources :rehearsals
   resources :scenes
   resources :conflicts
   resources :productions
   resources :people
   resources :schedules
+  resources :person_works
+  resources :works
+
   devise_for :users, controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations'
