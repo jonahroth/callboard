@@ -49,6 +49,22 @@ class WorksController < ApplicationController
     end
   end
 
+  def all_fits
+    work = Work.find(params[:id])
+    start_time = work.rehearsal.start_time
+    rehearsal_works = work.rehearsal.works.order(:sequence_id)
+    for w in rehearsal_works do
+      break if w.id == work.id
+      start_time += w.duration
+      start_time += w.break_duration
+    end
+    works = Work.where(production_id: current_user.person.production_id).where.not(id: work.id).select { |w| w.fits?(start_time) }.map(&:id)
+
+    respond_to do |format|
+      format.json { render json: works }
+    end
+  end
+
   private
     def set_work
       @work = Work.find(params[:id])

@@ -54,10 +54,16 @@
     swappable_works
 
   $scope.highlight_all_swappable = (orig_work) ->
-    for rehearsal in $scope.schedule.rehearsals
-      for work in rehearsal.works
-        if work.id in $scope.all_swappable(orig_work)
-          work.swappable = true
+    $http({
+      method: 'GET',
+      url: '/works/all_fits/' + orig_work.id + '.json'
+    }).then((response) ->
+      console.log response.data
+      for rehearsal in $scope.schedule.rehearsals
+        for work in rehearsal.works
+          if work.id in response.data
+            work.swappable = true
+    )
 
   $scope.unhighlight_all_swappable = () ->
     for rehearsal in $scope.schedule.rehearsals
