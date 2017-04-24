@@ -176,7 +176,6 @@
 
   works_load_success_fn = (response) ->
     $scope.works = (response.data)
-    console.log $scope.works
     $scope.person_works_messages = {}
     $scope.person_works_success = (response) ->
       work = $scope.works.filter((o) -> o.id == response.data.id)[0]
