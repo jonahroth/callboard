@@ -49,11 +49,6 @@ class Conflict < ApplicationRecord
     end
   end
 
-def start_not_past
-  	errors.add(:start, "Cannot be in the past") if 
-  	  self.start < Date.today
-  end
-
   def end_after_start
   	errors.add(:end, "Cannot occur before start") if 
   	  self.end < self.start
