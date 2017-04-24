@@ -54,7 +54,7 @@ class WorksController < ApplicationController
     start_time = work.rehearsal.start_time
     rehearsal_works = work.rehearsal.works.order(:sequence_id)
     for w in rehearsal_works do
-      break if w.id = work.id
+      break if w.id == work.id
       start_time += w.duration
       start_time += w.break_duration
     end
