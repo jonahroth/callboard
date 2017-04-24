@@ -131,6 +131,7 @@
 
   people_load_success_fn = (response) ->
     $scope.people = (response.data)
+    console.log $scope.people
     $scope.people_names = $scope.people.map (obj) ->
       obj.first + " " + obj.last
     $scope.conflicts_messages = {}

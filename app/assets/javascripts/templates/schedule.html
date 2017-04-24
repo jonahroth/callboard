@@ -25,4 +25,19 @@
             </div>
         </div>
     </div>
+    <div class="navbar-default footer">
+        <div class="container-fullwidth">
+            <div class="nav navbar-nav navbar-left">
+                <div class="saved-text">
+                    Last saved: {{ last_saved() }}
+                </div>
+            </div>
+            <div class="nav navbar-nav navbar-right action-button">
+                <form action="/#/schedule">
+                    <input type="submit" value="Generate" ng-click="distribute()" class="btn btn-generate">
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>

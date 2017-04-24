@@ -97,6 +97,14 @@
     console.log work.id + " " + work.sequence_id + " " + work.rehearsal_id
     console.log other_work.id + " " + other_work.sequence_id + " " + other_work.rehearsal_id
 
+  $scope.distribute = () ->
+    $http({
+      method: 'GET',
+      url: '/distribute.json'
+    }).then((response) ->
+      console.log response
+    )
+
     $http({
       method: 'PUT',
       url: '/works/' + work.id + '.json',

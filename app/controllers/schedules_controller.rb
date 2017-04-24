@@ -31,7 +31,6 @@ class SchedulesController < ApplicationController
   end
 
   def generate
-    current_production = current_user.person.production
     if current_production.schedules.any?
       @schedule = current_production.schedules.first
       render :show, location: @schedule, format: :json
@@ -41,6 +40,13 @@ class SchedulesController < ApplicationController
       @schedule.save!
       render :show, location: @schedule, status: :created, format: :json
     end
+  end
+
+  def distribute
+    emails = current_production.people.map(&:email)
+    puts emails
+    emails.each { |e| ScheduleMailer.schedule_email(e, current_production.schedules.last).deliver_later }
+    head :success
   end
 
   def update
