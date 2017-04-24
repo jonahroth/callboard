@@ -49,18 +49,19 @@ class WorksController < ApplicationController
     end
   end
 
-  def getAll
-    @work.id = Work.where(production_id: current_user.person.production_id).where.not(id: self.id).select do |w|
-      holder = Array.new(5000, hash.new)
-      used = 0
-      if w.fits?(start_datetime) 
-        #format.html { render :new }
-        #format.json { render json: @work.id }
-        holder[used]
-        used += 1
-      end
-      smallHolder = holder[0,used]
-      format.json { render json: smallHolder }
+  def all_fits
+    work = Work.find(params[:id])
+    start_time = work.rehearsal.start_time
+    rehearsal_works = work.rehearsal.works.order(:sequence_id)
+    for w in rehearsal_works do
+      break if w.id = work.id
+      start_time += w.duration
+      start_time += w.break_duration
+    end
+    works = Work.where(production_id: current_user.person.production_id).where.not(id: work.id).select { |w| w.fits?(start_time) }.map(&:id)
+
+    respond_to do |format|
+      format.json { render json: works }
     end
   end
 

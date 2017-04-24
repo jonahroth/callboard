@@ -30,9 +30,9 @@ class Work < ApplicationRecord
   end
 
   def all_conflicts(start_datetime)
-    end_datetime = start_time + self.duration.minutes
+    end_datetime = start_datetime + self.duration.minutes
     conflicts = Set.new
-    work.called.each do |p|
+    self.called.each do |p|
       p.conflicts.each do |c|
         unless c.fits?(start_datetime, end_datetime)
           conflicts << c

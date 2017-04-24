@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   post 'api/mobile/cell'    => 'mobile#cell'
   get  'api/mobile/refresh' => 'mobile#refresh'
 
+  get 'works/all_fits/:id' => 'works#all_fits'
+
   # TODO: get rid of this
   get 'generate' => 'schedules#generate'
 
