@@ -6,7 +6,7 @@ class Conflict < ApplicationRecord
 
   validates :frequency, :start, :end, presence: true
   validates :frequency, inclusion: [ONCE, WEEKLY]
-  validate :start_not_past, :end_after_start, :no_repeat
+  validate :end_after_start, :no_repeat #, :start_not_past
 
   def start=(str)
     super(DateTime.parse(str))

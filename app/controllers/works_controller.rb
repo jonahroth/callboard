@@ -49,6 +49,21 @@ class WorksController < ApplicationController
     end
   end
 
+  def getAll
+    @work.id = Work.where(production_id: current_user.person.production_id).where.not(id: self.id).select do |w|
+      holder = Array.new(5000, hash.new)
+      used = 0
+      if w.fits?(start_datetime) 
+        #format.html { render :new }
+        #format.json { render json: @work.id }
+        holder[used]
+        used += 1
+      end
+      smallHolder = holder[0,used]
+      format.json { render json: smallHolder }
+    end
+  end
+
   private
     def set_work
       @work = Work.find(params[:id])
