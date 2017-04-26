@@ -2,6 +2,10 @@
   $scope.loading = true
   $scope.people_loaded = false
   $scope.works_loaded = false
+
+  $scope.start_date = new Date().toDateString()
+  $scope.end_date = new Date().toDateString()
+
   $http({
     method: 'GET',
     url: '/current_user'
@@ -33,7 +37,19 @@
       return human_date(conflict_start) + ": " + human_time(conflict_start) + " - " + human_date(conflict_end) + ": " + human_time(conflict_end)
 
   $scope.generate_schedule = () ->
-    window.location.href = '/#/schedule'
+    console.log $scope.current_user
+    $scope.loading = true
+    $http({
+      method: 'POST',
+      url: 'schedules.json',
+      data: {
+        start_date: $scope.start_date,
+        end_date: $scope.end_date
+      }
+    }).then((response) ->
+      console.log response
+      window.location.href = '/#/schedule'
+    )
 
   ### PEOPLE AND CONFLICTS ###
   $scope.people_message = {person: {}}
