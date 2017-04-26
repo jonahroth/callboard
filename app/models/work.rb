@@ -31,14 +31,10 @@ class Work < ApplicationRecord
   # TODO Allow for expressing priority, maybe by returning a number instead
   # of a simple boolean.
   def fits?(start_datetime)
-    num_conflicts == 0
+    conflicts.size == 0
   end
 
-  def num_conflicts(start_datetime)
-    all_conflicts(start_datetime).size
-  end
-
-  def all_conflicts(start_datetime)
+  def conflicts(start_datetime)
     end_datetime = start_time + self.duration.minutes
     conflicts = Set.new
     work.called.each do |p|

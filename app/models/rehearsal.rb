@@ -18,7 +18,13 @@ class Rehearsal < ApplicationRecord
     end
   end
 
-
+  def conflicts
+    conflicts = Set.new
+    works.each do |w| 
+      conflicts = conflicts | w.conflicts(w.start_time)
+    end
+    conflicts
+  end
 
   def dead_time
     total = 0
