@@ -37,7 +37,6 @@ class SchedulesController < ApplicationController
       render :show, location: @schedule, format: :json
     else
       @schedule = Scheduler.schedule(current_production)
-      @schedule.production = current_production
       @schedule.save!
       render :show, location: @schedule, status: :created, format: :json
     end

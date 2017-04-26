@@ -1,7 +1,15 @@
 module Scheduler
 
   # TODO pass in a hash, not an array of preferences
-  def Scheduler.schedule(production, set_rehearsals=[], preferences=[])
+  def Scheduler.schedule(production, start_day = Date.today,
+                         end_day = Date.today + 1.month,
+                         max_duration = 4.hours, 
+                         max_mins_between_breaks = 55,
+                         break_len = 5)
+    # delete all schedules associated with production
+    production.schedules do |s|
+      s.delete!
+    end
     schedule = Schedule.create!(production: production)
     cpr = 3 # calls per rehearsal - just some temporary nonsense
     rehearsals = set_rehearsals.map do |e|
@@ -28,6 +36,7 @@ module Scheduler
       new_rehearsal.save!
     end
     schedule.save!
+    production.save!
     schedule
   end
 

@@ -18,7 +18,11 @@ class Work < ApplicationRecord
   # TODO Allow for expressing priority, maybe by returning a number instead
   # of a simple boolean.
   def fits?(start_datetime)
-    all_conflicts(start_datetime).size == 0
+    num_conflicts == 0
+  end
+
+  def num_conflicts(start_datetime)
+    all_conflicts(start_datetime).size
   end
 
   def all_conflicts(start_datetime)
@@ -34,5 +38,14 @@ class Work < ApplicationRecord
     conflicts
   end
 
-  private :all_conflicts
+  def similarity(other_work)
+    my_called = called.to_set
+    other_called = other_work.called.to_set
+    if my_called.subset?(other_called) or other_called.subset?(my_called)
+      1.0
+    else
+      (my_called & other_called).size.to_f / (my_called | other_called).size
+    end
+  end
+
 end
