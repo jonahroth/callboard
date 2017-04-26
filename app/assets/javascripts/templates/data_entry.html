@@ -8,6 +8,12 @@
         <div class="row active" ng-hide="loading">
             <div class="col-sm-6 scrollable" id="actors">
                 <h2>People</h2>
+                <form name="dateForm">
+                    <label>Start Date</label>
+                    <input date-picker class="date" ng-model="start_date">
+                    <label>End Date</label>
+                    <input date-picker class="date" ng-model="end_date">
+                </form>
                 <div ng-repeat="p in people">
                     <div class="actor">
                         <div class="delete glyphicon glyphicon-remove" ng-click="people_delete(p.id)"
@@ -148,7 +154,7 @@
                 </div>
             </div>
             <div class="nav navbar-nav navbar-right action-button">
-                <form action="/#/schedule">
+                <form>
                     <input type="submit" value="Generate" ng-click="generate_schedule()" class="btn btn-generate">
                 </form>
             </div>
