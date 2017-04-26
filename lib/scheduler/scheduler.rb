@@ -1,8 +1,8 @@
 module Scheduler
 
   # TODO pass in a hash, not an array of preferences
-  def Scheduler.schedule(production, set_rehearsals=[], preferences=[])
-    schedule = Schedule.create!(production: production)
+  def Scheduler.schedule(schedule, set_rehearsals=[], preferences=[])
+    production = schedule.production
     cpr = 3 # calls per rehearsal - just some temporary nonsense
     rehearsals = set_rehearsals.map do |e|
       e.dup

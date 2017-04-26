@@ -19,7 +19,10 @@ class SchedulesController < ApplicationController
   end
 
   def create
+    schedule_params[:start_date] = DateTime.strptime(schedule_params[:start_date], "%m/%d/%Y")
+    schedule_params[:end_date] = DateTime.strptime(schedule_params[:end_date], "%m/%d/%Y")
     @schedule = Schedule.new(schedule_params)
+    @schedule.production = current_production
 
     respond_to do |format|
       if @schedule.save
@@ -34,12 +37,14 @@ class SchedulesController < ApplicationController
 
   def generate
     if current_production.schedules.any?
-      @schedule = current_production.schedules.first
-      render :show, location: @schedule, format: :json
-    else
-      @schedule = Scheduler.schedule(current_production)
+      @schedule = current_production.schedules.last
+      Scheduler.schedule(@schedule) unless @schedule.rehearsals.any?
       @schedule.production = current_production
       @schedule.save!
+      render :show, location: @schedule, status: :created, format: :json
+    else
+      new_schedule = current_production.schedules.new
+      @schedule = Scheduler.schedule(new_schedule)
       render :show, location: @schedule, status: :created, format: :json
     end
   end
@@ -77,9 +82,10 @@ class SchedulesController < ApplicationController
   end
 
   def schedule_params
-    params.require(:schedule).permit(:id, :production_id, rehearsals: [:title, :start_time, :production_id, :schedule_id,
-                                                                  works: [:name, :work_type, :duration, :break_duration,
-                                                                          :rehearsal_id, :production_id, :swappable]])
+    params.require(:schedule).permit(:id, :production_id, :start_date, :end_date,
+                                     rehearsals: [:title, :start_time, :production_id, :schedule_id,
+                                                  works: [:name, :work_type, :duration, :break_duration,
+                                                          :rehearsal_id, :production_id, :swappable]])
   end
 
   def is_email(str)
