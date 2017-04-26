@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   # TODO: get rid of this
   get 'generate' => 'schedules#generate'
+  get 'distribute' => 'schedules#distribute'
 
   resources :rehearsals
   resources :conflicts

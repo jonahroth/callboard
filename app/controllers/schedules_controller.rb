@@ -2,6 +2,8 @@ class SchedulesController < ApplicationController
   include Scheduler
   before_action :set_schedule, only: [:show, :edit, :update, :destroy]
 
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+
   def index
     @schedules = Schedule.all
   end
@@ -31,7 +33,6 @@ class SchedulesController < ApplicationController
   end
 
   def generate
-    current_production = current_user.person.production
     if current_production.schedules.any?
       @schedule = current_production.schedules.first
       render :show, location: @schedule, format: :json
@@ -40,6 +41,13 @@ class SchedulesController < ApplicationController
       @schedule.save!
       render :show, location: @schedule, status: :created, format: :json
     end
+  end
+
+  def distribute
+    emails = current_production.people.map(&:email).select { |str| is_email(str) }
+    puts emails
+    emails.each { |e| ScheduleMailer.schedule_email(e, current_production.schedules.last).deliver_now }
+    head :success
   end
 
   def update
@@ -71,5 +79,9 @@ class SchedulesController < ApplicationController
     params.require(:schedule).permit(:id, :production_id, rehearsals: [:title, :start_time, :production_id, :schedule_id,
                                                                   works: [:name, :work_type, :duration, :break_duration,
                                                                           :rehearsal_id, :production_id, :swappable]])
+  end
+
+  def is_email(str)
+    str =~ VALID_EMAIL_REGEX
   end
 end

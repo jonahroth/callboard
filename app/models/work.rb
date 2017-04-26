@@ -13,6 +13,19 @@ class Work < ApplicationRecord
     people
   end
 
+  def start_time
+    return nil unless rehearsal
+    time = rehearsal.start_time
+    rehearsal_works = rehearsal.works.order(:sequence_id)
+
+    for w in rehearsal_works do
+      break if w.id == self.id
+      time += w.duration.minutes
+      time += w.break_duration.minutes
+    end
+    time
+  end
+
   # Whether this piece of work can be scheduled at a given start time
   # without conflicts.
   # TODO Allow for expressing priority, maybe by returning a number instead
