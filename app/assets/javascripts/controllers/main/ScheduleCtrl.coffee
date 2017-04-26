@@ -11,6 +11,9 @@
   $scope.date_format = (date) ->
     new Date(date).toDateString()
 
+  $scope.time_format = (date) ->
+    new Date(date).toLocaleTimeString('en-US', {hour12: true, hour: '2-digit', minute: '2-digit'})
+
   $scope.swappable = (work1, work2) ->
     true
 
@@ -44,6 +47,7 @@
     tmp = work1
     rehearsal1.works[index1] = work2
     rehearsal2.works[index2] = work1
+    tmp = work1.start_time
 
   $scope.all_swappable = (work1) ->
     swappable_works = []
@@ -93,6 +97,13 @@
     console.log work.id + " " + work.sequence_id + " " + work.rehearsal_id
     console.log other_work.id + " " + other_work.sequence_id + " " + other_work.rehearsal_id
 
+  $scope.distribute = () ->
+    $http({
+      method: 'GET',
+      url: '/distribute.json'
+    }).then((response) ->
+      console.log response
+    )
 
     $http({
       method: 'PUT',

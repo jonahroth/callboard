@@ -24,6 +24,10 @@ class ApplicationController < ActionController::Base
     render json: current_user
   end
 
+  def current_production
+    current_user.try(:person).try(:production)
+  end
+
   protected
 
   def verified_request?

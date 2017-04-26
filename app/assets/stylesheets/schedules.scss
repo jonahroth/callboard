@@ -143,6 +143,17 @@ h2 {
   }
 }
 
+.sch-work {
+  overflow: hidden;
+  .called-actor {
+    background-color: lightblue;
+    float: left;
+    margin: 2pt;
+    padding: 2pt;
+    border-radius: 3px;
+  }
+}
+
 .work-calls, .work-deps {
   width: 50%;
   float: left;

@@ -13,6 +13,7 @@
                         <div class="delete glyphicon glyphicon-remove" ng-click="people_delete(p.id)"
                              ng-hide="p.id == current_user.person_id"></div>
                         <div class="name">{{ p.first }} {{ p.last }}</div>
+                        <div class="contact">{{ p.email }} | {{ p.cell }}</div>
                         <ul>
                             <li ng-repeat="c in p.conflicts" class="conflict" id="conflict_{{c.id}}">
                                 <div class="delete-inline glyphicon glyphicon-remove"
@@ -43,7 +44,7 @@
                 </div>
                 <div class="actor">
                     <form name="personForm" ng-submit="people_submit()" class="form-inline">
-                        <h4>Name</h4>
+                        <h4>Add Person</h4>
                         <div class="form-group">
                             <label>First</label>
                             <input type="text" name="first" class="form-control" ng-model="people_message.person.first" id="person-form-start">
@@ -51,6 +52,14 @@
                         <div class="form-group">
                             <label>Last</label>
                             <input type="text" name="last" class="form-control" ng-model="people_message.person.last">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" name="email" class="form-control" ng-model="people_message.person.email">
+                        </div>
+                        <div class="form-group">
+                            <label>Cell</label>
+                            <input type="text" name="cell" class="form-control" ng-model="people_message.person.cell">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -108,6 +117,7 @@
                     </div>
                 </div>
                 <div class="work">
+                    <h4>Add Work</h4>
                     <form name="workForm" ng-submit="works_submit()" class="form-inline">
                         <div class="form-group">
                             <label>Name</label>
