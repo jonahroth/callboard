@@ -19,9 +19,10 @@ class SchedulesController < ApplicationController
   end
 
   def create
-    schedule_params[:start_date] = DateTime.strptime(schedule_params[:start_date], "%m/%d/%Y")
-    schedule_params[:end_date] = DateTime.strptime(schedule_params[:end_date], "%m/%d/%Y")
-    @schedule = Schedule.new(schedule_params)
+    typed_schedule_params = schedule_params.to_h
+    typed_schedule_params[:start_date] = DateTime.strptime(schedule_params[:start_date], "%m/%d/%Y")
+    typed_schedule_params[:end_date] = DateTime.strptime(schedule_params[:end_date], "%m/%d/%Y")
+    @schedule = Schedule.new(typed_schedule_params)
     @schedule.production = current_production
 
     respond_to do |format|

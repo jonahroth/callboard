@@ -7,7 +7,7 @@ module Scheduler
     rehearsals = set_rehearsals.map do |e|
       e.dup
     end
-    start = Time.now
+    start = schedule.start_date
     new_rehearsal = Rehearsal.create!(start_time: start, schedule: schedule)
     production.works.each_with_index do |c, i|
       c.break_duration = 5
