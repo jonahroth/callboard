@@ -167,6 +167,15 @@ h2 {
   margin-top: 6pt;
 }
 
+[date-pair] {
+  float: left;
+  margin-right: 6pt;
+}
+
+.btn-short {
+  padding: 1px 5px !important;
+}
+
 // ANIMATIONS
 
 @keyframes flash-green {

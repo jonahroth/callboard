@@ -36,7 +36,7 @@
                                     <label>Weekly</label>
                                     <input type="checkbox" ng-model="conflicts_messages[p.id].frequency"
                                            ng-true-value="'W'" ng-false-value="'O'">
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary btn-short" ng-show="conflicts_messages[p.id].start_time && conflicts_messages[p.id].end_time">Save</button>
                                 </form>
                             </li>
                         </ul>
