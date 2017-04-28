@@ -94,7 +94,7 @@ class SchedulesController < ApplicationController
   end
 
   def get_date(raw_time)
-    DateTime.strptime(schedule_params[:start_date], "%m/%d/%Y")
+    DateTime.strptime(raw_time, "%m/%d/%Y")
   rescue
     Time.zone.today
   end
