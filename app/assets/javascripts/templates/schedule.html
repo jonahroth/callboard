@@ -1,4 +1,5 @@
 <div ng-controller="ScheduleCtrl" class="app row">
+    <div ng-show="distributed"><strong>Current schedule has been distributed.</strong></div>
     <div class="container">
         <div class="row" id="loading" ng-show="loading">
             <div class="loading-box">
@@ -34,10 +35,9 @@
             </div>
             <div class="nav navbar-nav navbar-right action-button">
                 <form action="/#/schedule">
-                    <input type="submit" value="Generate" ng-click="distribute()" class="btn btn-generate">
+                    <input type="submit" value="Distribute" ng-click="distribute()" class="btn btn-generate">
                 </form>
             </div>
         </div>
     </div>
-
 </div>

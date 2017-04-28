@@ -183,6 +183,7 @@
       url: '/works.json',
       data: $scope.works_message
     }).then($scope.works_success, $scope.works_failure)
+
   $scope.works_delete = (id) ->
     delete_work = confirm('Are you sure you want to delete this work?')
     if delete_work
