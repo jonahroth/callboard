@@ -178,16 +178,11 @@
   $scope.works_failure = (response) ->
     console.log('request failed')
   $scope.works_submit = () ->
-    if $scope.works_message.name and $scope.works_message.work_type and $scope.works_message.duration
-      $http({
-        method: 'POST',
-        url: '/works.json',
-        data: $scope.works_message
-      }).then($scope.works_success, $scope.works_failure)
-    else
-      dom_conflict = $('#work-form-wrapper')
-      dom_conflict.addClass('flash-red')
-      window.setTimeout((() -> dom_conflict.removeClass('flash-red')), 1000)
+    $http({
+      method: 'POST',
+      url: '/works.json',
+      data: $scope.works_message
+    }).then($scope.works_success, $scope.works_failure)
 
   $scope.works_delete = (id) ->
     delete_work = confirm('Are you sure you want to delete this work?')

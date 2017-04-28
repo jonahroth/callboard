@@ -62,7 +62,7 @@
                             <label>Cell</label>
                             <input type="text" name="cell" class="form-control" ng-model="people_message.person.cell">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" ng-show="people_message.person.first && people_message.person.last">Submit</button>
                     </form>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                             <input type="number" name="duration" class="form-control short"
                                    ng-model="works_message.work.duration">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" ng-show="works_message.work.name && works_message.work.duration">Submit</button>
                     </form>
 
                 </div>
