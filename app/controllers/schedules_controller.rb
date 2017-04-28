@@ -33,7 +33,7 @@ class SchedulesController < ApplicationController
   end
 
   def generate
-    if current_production.schedules.any?
+    if redone
       @schedule = current_production.schedules.first
       render :show, location: @schedule, format: :json
     else
@@ -42,6 +42,15 @@ class SchedulesController < ApplicationController
       @schedule.save!
       render :show, location: @schedule, status: :created, format: :json
     end
+  end
+
+  def redone
+    redoned = true
+    current_production.schedules.first.rehearsals.work.each do |w|
+      #if(w.updated_at )
+    #another for loop here to check that the conflicts are the same plus another for people the same
+    #if any conditions violated, we can set redoned to false, alternatively we can return false to break out
+    redoned  
   end
 
   def distribute

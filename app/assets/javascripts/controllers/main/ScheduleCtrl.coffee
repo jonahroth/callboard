@@ -36,6 +36,9 @@
     $scope.swap($scope.dragged_work, $scope.dropped_work)
     $scope.update_work($scope.dragged_work, $scope.dropped_work)
 
+  $scope.regen_sched = () ->
+      window.location.href = '/#'
+
   $scope.swap = (work1, work2) ->
     rehearsal1 = null
     rehearsal2 = null
