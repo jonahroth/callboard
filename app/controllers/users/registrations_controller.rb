@@ -9,7 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def create_person_and_production
     production = Production.create!(title: params[:production_title])
-    person = production.people.create!(first: params[:first], last: params[:last])
+    person = production.people.create!(first: params[:first], last: params[:last], email: @user.email, cell: params[:cell])
     @user.person = person
     @user.save!
   end

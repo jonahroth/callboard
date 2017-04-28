@@ -20,8 +20,8 @@ class SchedulesController < ApplicationController
 
   def create
     typed_schedule_params = schedule_params.to_h
-    typed_schedule_params[:start_date] = DateTime.strptime(schedule_params[:start_date], "%m/%d/%Y")
-    typed_schedule_params[:end_date] = DateTime.strptime(schedule_params[:end_date], "%m/%d/%Y")
+    typed_schedule_params[:start_date] = get_date schedule_params[:start_date]
+    typed_schedule_params[:end_date] = get_date schedule_params[:end_date]
     @schedule = Schedule.new(typed_schedule_params)
     @schedule.production = current_production
 
@@ -91,5 +91,11 @@ class SchedulesController < ApplicationController
 
   def is_email(str)
     str =~ VALID_EMAIL_REGEX
+  end
+
+  def get_date(raw_time)
+    DateTime.strptime(raw_time, "%m/%d/%Y")
+  rescue
+    Time.zone.today
   end
 end

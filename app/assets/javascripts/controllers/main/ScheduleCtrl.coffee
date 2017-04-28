@@ -8,6 +8,13 @@
   $scope.dragged_work = null
   $scope.dropped_work = null
 
+  $scope.recalculate_all_times = () ->
+    for rehearsal in $scope.schedule.rehearsals
+      time = new Date(rehearsal.start_time)
+      for work in rehearsal.works
+        work.start_time = time
+        time = new Date(time.getTime() + ((work.duration + work.break_duration) * 60000))
+
   $scope.date_format = (date) ->
     new Date(date).toDateString()
 
@@ -18,23 +25,21 @@
     true
 
   $scope.on_work_drag = (event) ->
-    console.log event
     $scope.dragged_work = $scope.get_dragged_work(event)
     $scope.highlight_all_swappable($scope.dragged_work)
     $scope.$digest()
 
   $scope.on_work_drag_end = (event) ->
-    console.log event
     $scope.unhighlight_all_swappable()
     $scope.reset_drag_position(event.target)
     $scope.$digest()
 
   $scope.on_drop = (event) ->
-    console.log event
     work = $scope.get_dropped_work(event)
     $scope.dropped_work = $scope.get_dropped_work(event)
     $scope.swap($scope.dragged_work, $scope.dropped_work)
     $scope.update_work($scope.dragged_work, $scope.dropped_work)
+    $scope.recalculate_all_times()
 
   $scope.swap = (work1, work2) ->
     rehearsal1 = null

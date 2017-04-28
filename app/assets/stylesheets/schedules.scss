@@ -163,6 +163,19 @@ h2 {
   width: 100%;
 }
 
+.form-control, .btn {
+  margin-top: 6pt;
+}
+
+[date-pair] {
+  float: left;
+  margin-right: 6pt;
+}
+
+.btn-short {
+  padding: 1px 5px !important;
+}
+
 // ANIMATIONS
 
 @keyframes flash-green {
@@ -185,7 +198,7 @@ h2 {
   }
 
   100% {
-    background: none;
+    background: white;
   }
 }
 

@@ -6,6 +6,9 @@
   $scope.start_date = new Date().toDateString()
   $scope.end_date = new Date().toDateString()
 
+  offset = new Date().getTimezoneOffset()
+  blank_conflict = {frequency: 'O', offset: (offset / 60)}
+
   $http({
     method: 'GET',
     url: '/current_user'
@@ -56,6 +59,7 @@
   $scope.people_success = (response) ->
     $scope.people.push(response.data)
     $scope.people_message = {person: {}}
+    $scope.conflicts_messages[response.data.id] = blank_conflict
     $('#person-form-start').focus()
     $scope.touch_last_saved()
   $scope.people_failure = (response) ->
@@ -151,8 +155,7 @@
     $scope.people_names = $scope.people.map (obj) ->
       obj.first + " " + obj.last
     $scope.conflicts_messages = {}
-    offset = new Date().getTimezoneOffset()
-    $scope.conflicts_messages[p.id] = {frequency: 'O', offset: (offset / 60)} for p in $scope.people
+    $scope.conflicts_messages[p.id] = blank_conflict for p in $scope.people
 
     dp(p.id) for p in $scope.people
 
@@ -180,6 +183,7 @@
       url: '/works.json',
       data: $scope.works_message
     }).then($scope.works_success, $scope.works_failure)
+
   $scope.works_delete = (id) ->
     delete_work = confirm('Are you sure you want to delete this work?')
     if delete_work
