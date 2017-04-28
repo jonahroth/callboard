@@ -8,12 +8,6 @@
         <div class="row active" ng-hide="loading">
             <div class="col-sm-6 scrollable" id="actors">
                 <h2>People</h2>
-                <form name="dateForm">
-                    <label>Start Date</label>
-                    <input date-picker class="date" ng-model="start_date">
-                    <label>End Date</label>
-                    <input date-picker class="date" ng-model="end_date">
-                </form>
                 <div ng-repeat="p in people">
                     <div class="actor">
                         <div class="delete glyphicon glyphicon-remove" ng-click="people_delete(p.id)"
@@ -53,7 +47,8 @@
                         <h4>Add Person</h4>
                         <div class="form-group">
                             <label>First</label>
-                            <input type="text" name="first" class="form-control" ng-model="people_message.person.first" id="person-form-start">
+                            <input type="text" name="first" class="form-control" ng-model="people_message.person.first"
+                                   id="person-form-start">
                         </div>
                         <div class="form-group">
                             <label>Last</label>
@@ -73,6 +68,16 @@
             </div>
             <div class="col-sm-6 scrollable" id="works">
                 <h2>Work</h2>
+
+                <div class="work-params">
+                    <form name="dateForm">
+                        <label>Start Date</label>
+                        <input date-picker class="date" ng-model="start_date">
+                        <label>End Date</label>
+                        <input date-picker class="date" ng-model="end_date">
+                    </form>
+                </div>
+                <hr>
                 <div ng-repeat="w in works">
                     <div class="work">
                         <div class="delete glyphicon glyphicon-remove" ng-click="works_delete(w.id)"></div>
@@ -122,12 +127,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="work">
+                <div class="work" id="work-form-wrapper">
                     <h4>Add Work</h4>
                     <form name="workForm" ng-submit="works_submit()" class="form-inline">
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" name="name" class="form-control short" id="work-form-start" ng-model="works_message.work.name">
+                            <input type="text" name="name" class="form-control short" id="work-form-start"
+                                   ng-model="works_message.work.name">
                         </div>
                         <div class="form-group">
                             <label>Type</label>
